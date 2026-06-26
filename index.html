@@ -98,7 +98,12 @@
     #saveOverlay.hidden-overlay {
       opacity: 0;
       visibility: hidden;
-    }
+    } 
+    @media (max-height: 760px) {
+  .glass-card {
+    border-radius: 1.7rem;
+  }
+}
   </style>
 </head>
 
@@ -145,63 +150,56 @@
   <!-- Background grid -->
   <div class="grid-bg fixed inset-0 pointer-events-none opacity-70"></div>
 
-  <main class="relative z-10 min-h-screen flex items-center justify-center px-5 py-10">
+  <main class="relative z-10 min-h-[100svh] flex items-start justify-center px-3 py-4 sm:px-5 sm:py-10">
 
-    <article class="glass-card w-full max-w-[460px] rounded-[2.4rem] overflow-hidden shadow-glow">
+    <article class="glass-card w-full max-w-[460px] rounded-[2rem] sm:rounded-[2.4rem] overflow-hidden shadow-glow">
 
       <!-- Header -->
-      <header class="relative px-7 pt-12 pb-7 text-center">
+      <header class="relative px-5 sm:px-7 pt-7 sm:pt-12 pb-5 sm:pb-7 text-center">
 
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-56 h-56 bg-rdBlue/20 blur-[90px] rounded-full"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-56 sm:h-56 bg-rdBlue/20 blur-[80px] sm:blur-[90px] rounded-full"></div>
 
-        <div class="relative">
+  <div class="relative">
 
-          <!-- Logo oculto -->
-<img 
-  src="assets/rd-isotipo.svg" 
-  alt="Logo Roberto Durán" 
-  class="hidden"
-  loading="eager"
-/>
+    <!-- Foto de perfil responsive -->
+    <div class="mx-auto w-32 h-32 sm:w-44 sm:h-44 rounded-full p-[3px] bg-gradient-to-br from-rdBlue to-white/10 shadow-glow">
+      <img 
+        src="assets/roberto-profile.webp" 
+        alt="Foto de Roberto Durán"
+        class="w-full h-full object-cover rounded-full bg-rdGraphite"
+        loading="lazy"
+      />
+    </div>
 
-          <!-- Foto de perfil más grande -->
-          <div class="mx-auto w-40 h-40 sm:w-44 sm:h-44 rounded-full p-[3px] bg-gradient-to-br from-rdBlue to-white/10 shadow-glow">
-            <img 
-              src="assets/roberto-profile.webp" 
-              alt="Foto de Roberto Durán"
-              class="w-full h-full object-cover rounded-full bg-rdGraphite"
-              loading="lazy"
-            />
-          </div>
+    <p class="mt-5 sm:mt-7 text-[0.65rem] sm:text-sm uppercase tracking-[0.32em] sm:tracking-[0.35em] text-rdBlue font-semibold">
+      Arquitecto Digital
+    </p>
 
-          <p class="mt-7 text-xs sm:text-sm uppercase tracking-[0.35em] text-rdBlue font-semibold">
-            Arquitecto Digital
-          </p>
+    <h1 class="font-oxanium text-[clamp(2.05rem,8.4vw,3.25rem)] font-extrabold tracking-[-0.05em] mt-2 sm:mt-3 leading-none whitespace-nowrap">
+      ROBERTO DURÁN
+    </h1>
 
-          <h1 class="font-oxanium text-[clamp(2.35rem,8vw,3.25rem)] font-extrabold tracking-[-0.04em] mt-3 leading-none whitespace-nowrap">
-  ROBERTO DURÁN
-</h1>
+    <p class="mt-4 sm:mt-5 text-rdGray text-[0.95rem] sm:text-lg leading-relaxed max-w-sm mx-auto">
+      Estratega visual y especialista en IA. Ayudo a emprendedores a escalar mediante sistemas inteligentes y diseño de alto impacto.
+    </p>
 
-          <p class="mt-5 text-rdGray text-base sm:text-lg leading-relaxed max-w-sm mx-auto">
-            Estratega visual y especialista en IA. Ayudo a emprendedores a escalar mediante sistemas inteligentes y diseño de alto impacto.
-          </p>
-        </div>
-      </header>
+  </div>
+</header>
 
       <div class="blue-line h-[1px] w-full opacity-80"></div>
 
       <!-- Manifesto -->
-      <section class="px-7 py-6">
-        <div class="rounded-3xl bg-white/[0.035] border border-white/10 p-5 sm:p-6">
-          <p class="font-oxanium text-xl sm:text-2xl font-bold leading-snug">
-            “La inteligencia artificial no reemplaza la creatividad. 
-            <span class="text-rdBlue">La potencia.</span>”
-          </p>
-          <p class="text-rdGray text-base mt-4 leading-relaxed">
-            Tecnología, diseño estratégico y automatización aplicados a negocios reales.
-          </p>
-        </div>
-      </section>
+      <section class="px-5 sm:px-7 py-4 sm:py-6">
+  <div class="rounded-[1.6rem] sm:rounded-3xl bg-white/[0.035] border border-white/10 p-4 sm:p-6">
+    <p class="font-oxanium text-[1.35rem] sm:text-2xl font-bold leading-tight">
+      “La inteligencia artificial no reemplaza la creatividad. 
+      <span class="text-rdBlue">La potencia.</span>”
+    </p>
+    <p class="text-rdGray text-[0.95rem] sm:text-base mt-3 sm:mt-4 leading-relaxed">
+      Tecnología, diseño estratégico y automatización aplicados a negocios reales.
+    </p>
+  </div>
+</section>
 
       <!-- Action Buttons -->
       <section class="px-7 pb-6 space-y-3" id="servicios">
