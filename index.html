@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Roberto Durán | Arquitecto Digital</title>
+  <meta name="description" content="Roberto Durán, Arquitecto Digital especializado en IA aplicada, automatización, branding estratégico, diseño gráfico y negocios digitales." />
+  <meta name="theme-color" content="#050505" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roberto Durán | Arquitecto Digital" />
+  <meta property="og:description" content="IA aplicada, automatización, branding estratégico y negocios digitales." />
+  <meta property="og:image" content="assets/preview.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oxanium:wght@600;700;800&display=swap" 
+    rel="stylesheet"
+  >
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rdBlack: "#050505",
+            rdBlue: "#3177F3",
+            rdWhite: "#FFFFFF",
+            rdGray: "#828282",
+            rdGraphite: "#1C1C1C"
+          },
+          fontFamily: {
+            oxanium: ["Oxanium", "sans-serif"],
+            inter: ["Inter", "sans-serif"]
+          },
+          boxShadow: {
+            glow: "0 0 40px rgba(49, 119, 243, 0.35)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background:
+        radial-gradient(circle at top, rgba(49,119,243,0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(49,119,243,0.08), transparent 28%),
+        #050505;
+    }
+
+    .glass-card {
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.075),
+        rgba(255,255,255,0.025)
+      );
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .blue-line {
+      background: linear-gradient(90deg, transparent, #3177F3, transparent);
+    }
+
+    .action-btn {
+      transition: all 0.25s ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(49,119,243,0.28);
+      border-color: rgba(49,119,243,0.75);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+      -webkit-mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    #saveOverlay {
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+
+    #saveOverlay.hidden-overlay {
+      opacity: 0;
+      visibility: hidden;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-rdWhite font-inter overflow-x-hidden">
+
+  <!-- Auto-save overlay -->
+  <section 
+    id="saveOverlay" 
+    class="fixed inset-0 z-50 flex items-center justify-center bg-rdBlack px-6"
+    aria-label="Guardando contacto"
+  >
+    <div class="glass-card max-w-sm w-full rounded-[2rem] p-8 text-center shadow-glow">
+      <img 
+        src="assets/rd-isotipo.svg" 
+        alt="Isotipo RD" 
+        class="w-16 h-16 mx-auto mb-6"
+        loading="eager"
+      />
+
+      <p class="font-oxanium text-xl font-bold tracking-wide">
+        ROBERTO DURÁN
+      </p>
+
+      <p class="text-rdGray text-sm mt-2">
+        Preparando contacto digital...
+      </p>
+
+      <button 
+        onclick="downloadVCard()" 
+        class="mt-6 w-full rounded-full bg-rdBlue px-5 py-3 font-semibold text-white"
+      >
+        Guardar contacto
+      </button>
+
+      <button 
+        onclick="hideOverlay()" 
+        class="mt-3 text-sm text-rdGray hover:text-white"
+      >
+        Continuar a la V-Card
+      </button>
+    </div>
+  </section>
+
+  <!-- Background grid -->
+  <div class="grid-bg fixed inset-0 pointer-events-none opacity-70"></div>
+
+  <main class="relative z-10 min-h-screen flex items-center justify-center px-5 py-10">
+
+    <article class="glass-card w-full max-w-[460px] rounded-[2.4rem] overflow-hidden shadow-glow">
+
+      <!-- Header visual -->
+      <header class="relative px-7 pt-8 pb-6 text-center">
+
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 bg-rdBlue/20 blur-[80px] rounded-full"></div>
+
+        <div class="relative">
+          <img 
+            src="assets/rd-isotipo.svg" 
+            alt="Isotipo RD" 
+            class="w-20 h-20 mx-auto mb-5"
+            loading="eager"
+          />
+
+          <!-- Imagen opcional de perfil -->
+          <div class="mx-auto w-28 h-28 rounded-full p-[2px] bg-gradient-to-br from-rdBlue to-white/10 shadow-glow">
+            <img 
+              src="assets/roberto-profile.webp" 
+              alt="Foto de Roberto Durán"
+              class="w-full h-full object-cover rounded-full bg-rdGraphite"
+              loading="lazy"
+            />
+          </div>
+
+          <p class="mt-6 text-xs uppercase tracking-[0.35em] text-rdBlue font-semibold">
+            Arquitecto Digital
+          </p>
+
+          <h1 class="font-oxanium text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 leading-tight">
+            ROBERTO DURÁN
+          </h1>
+
+          <p class="mt-3 text-rdGray text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
+            Estratega visual y especialista en IA. Ayudo a emprendedores a escalar mediante sistemas inteligentes y diseño de alto impacto.
+          </p>
+        </div>
+      </header>
+
+      <div class="blue-line h-[1px] w-full opacity-70"></div>
+
+      <!-- Manifesto -->
+      <section class="px-7 py-6">
+        <div class="rounded-3xl bg-white/[0.035] border border-white/10 p-5">
+          <p class="font-oxanium text-lg font-bold leading-snug">
+            “La inteligencia artificial no reemplaza la creatividad. 
+            <span class="text-rdBlue">La potencia.</span>”
+          </p>
+          <p class="text-rdGray text-sm mt-3">
+            Tecnología, diseño estratégico y automatización aplicados a negocios reales.
+          </p>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <section class="px-7 pb-6 space-y-3" id="servicios">
+
+        <a 
+          href="#ia-automatizacion" 
+          class="action-btn flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
+        >
+          <span>
+            <strong class="block font-semibold">Sistemas de IA & Automatización</strong>
+            <small class="text-rdGray">Flujos inteligentes para emprendedores</small>
+          </span>
+          <span class="text-rdBlue text-xl">↗</span>
+        </a>
+
+        <a 
+          href="https://TU-LINK-DE-MEGAPACK.com" 
+          target="_blank"
+          rel="noopener"
+          class="action-btn flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
+        >
+          <span>
+            <strong class="block font-semibold">Megapack de Vectores</strong>
+            <small class="text-rdGray">Recursos digitales para la industria gráfica</small>
+          </span>
+          <span class="text-rdBlue text-xl">↗</span>
+        </a>
+
+        <a 
+          href="https://TU-LINK-DE-CURSOS.com" 
+          target="_blank"
+          rel="noopener"
+          class="action-btn flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
+        >
+          <span>
+            <strong class="block font-semibold">Academia de Diseño & Sublimación</strong>
+            <small class="text-rdGray">Mentoría técnica y creativa aplicada</small>
+          </span>
+          <span class="text-rdBlue text-xl">↗</span>
+        </a>
+
+        <a 
+          href="https://wa.me/573232503496?text=Hola%20Roberto%2C%20quiero%20informaci%C3%B3n%20sobre%20consultor%C3%ADa%20B2B%20y%20sistemas%20de%20IA."
+          target="_blank"
+          rel="noopener"
+          class="action-btn flex items-center justify-between rounded-2xl border border-rdBlue/60 bg-rdBlue/15 px-5 py-4"
+        >
+          <span>
+            <strong class="block font-semibold">Consultoría B2B</strong>
+            <small class="text-rdGray">Agenda una conversación por WhatsApp</small>
+          </span>
+          <span class="text-rdBlue text-xl">↗</span>
+        </a>
+
+      </section>
+
+      <!-- Services -->
+      <section class="px-7 pb-7 space-y-4">
+
+        <div id="ia-automatizacion" class="rounded-3xl border border-white/10 bg-white/[0.025] p-5">
+          <h2 class="font-oxanium text-lg font-bold text-rdBlue">
+            Automatizador & Tutor de IA
+          </h2>
+          <p class="text-sm text-rdGray mt-2 leading-relaxed">
+            Construcción de sistemas inteligentes, asistentes personalizados y formación práctica para emprendedores.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/[0.025] p-5">
+          <h2 class="font-oxanium text-lg font-bold text-rdBlue">
+            Diseñador Gráfico Estratégico
+          </h2>
+          <p class="text-sm text-rdGray mt-2 leading-relaxed">
+            Branding digital, identidad visual, contenido publicitario y sistemas gráficos con enfoque comercial.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/[0.025] p-5">
+          <h2 class="font-oxanium text-lg font-bold text-rdBlue">
+            CEO de Megapack de Vectores
+          </h2>
+          <p class="text-sm text-rdGray mt-2 leading-relaxed">
+            Ecosistema de recursos digitales para sublimación, DTF, diseño gráfico y producción personalizada.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/[0.025] p-5">
+          <h2 class="font-oxanium text-lg font-bold text-rdBlue">
+            Tutor de Sublimación & Diseño
+          </h2>
+          <p class="text-sm text-rdGray mt-2 leading-relaxed">
+            Mentoría técnica y creativa para emprendedores de la industria gráfica y personalización.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- Social -->
+      <section class="px-7 pb-7">
+        <div class="flex justify-center gap-3">
+
+          <a 
+            href="https://www.linkedin.com/in/TU-USUARIO" 
+            target="_blank" 
+            rel="noopener"
+            aria-label="LinkedIn"
+            class="w-11 h-11 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center hover:border-rdBlue transition"
+          >
+            in
+          </a>
+
+          <a 
+            href="https://www.instagram.com/TU-USUARIO" 
+            target="_blank" 
+            rel="noopener"
+            aria-label="Instagram"
+            class="w-11 h-11 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center hover:border-rdBlue transition"
+          >
+            IG
+          </a>
+
+          <a 
+            href="https://www.youtube.com/@TU-USUARIO" 
+            target="_blank" 
+            rel="noopener"
+            aria-label="YouTube"
+            class="w-11 h-11 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center hover:border-rdBlue transition"
+          >
+            ▶
+          </a>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="px-7 pb-8 text-center">
+        <a 
+          href="Roberto-Duran.vcf"
+          download
+          class="inline-flex items-center justify-center rounded-full border border-white/10 px-5 py-3 text-sm font-semibold hover:border-rdBlue transition"
+        >
+          Guardar contacto
+        </a>
+
+        <p class="font-oxanium text-sm text-white mt-6">
+          El futuro del diseño ya no es manual. 
+          <span class="text-rdBlue">Es estratégico.</span>
+        </p>
+
+        <p class="text-xs text-rdGray mt-3">
+          RD Digital Identity · Medellín, Colombia
+        </p>
+      </footer>
+
+    </article>
+  </main>
+
+  <script>
+    const CONTACT_FILE = "Roberto-Duran.vcf";
+
+    function downloadVCard() {
+      const link = document.createElement("a");
+      link.href = CONTACT_FILE;
+      link.download = "Roberto-Duran.vcf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById("saveOverlay");
+      overlay.classList.add("hidden-overlay");
+    }
+
+    function shouldAutoSave() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("save") === "1";
+    }
+
+    window.addEventListener("load", () => {
+      if (shouldAutoSave()) {
+        setTimeout(() => {
+          downloadVCard();
+        }, 500);
+
+        setTimeout(() => {
+          hideOverlay();
+        }, 1800);
+      } else {
+        hideOverlay();
+      }
+    });
+  </script>
+
+</body>
+</html>
