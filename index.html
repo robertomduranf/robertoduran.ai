@@ -99,11 +99,54 @@
       opacity: 0;
       visibility: hidden;
     } 
+
     @media (max-height: 760px) {
-  .glass-card {
-    border-radius: 1.7rem;
-  }
-}
+      .glass-card {
+        border-radius: 1.7rem;
+      }
+    }
+
+    /* Botón flotante WhatsApp */
+    .whatsapp-floating {
+      position: fixed;
+      right: 18px;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      width: 62px;
+      height: 62px;
+      border-radius: 999px;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      box-shadow: 0 0 34px rgba(37, 211, 102, 0.42);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .whatsapp-floating:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 0 42px rgba(37, 211, 102, 0.62);
+    }
+
+    .whatsapp-floating svg {
+      width: 32px;
+      height: 32px;
+      fill: #ffffff;
+    }
+
+    @media (max-width: 480px) {
+      .whatsapp-floating {
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom));
+        width: 58px;
+        height: 58px;
+      }
+
+      .whatsapp-floating svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
   </style>
 </head>
 
@@ -157,49 +200,49 @@
       <!-- Header -->
       <header class="relative px-5 sm:px-7 pt-7 sm:pt-12 pb-5 sm:pb-7 text-center">
 
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-56 sm:h-56 bg-rdBlue/20 blur-[80px] sm:blur-[90px] rounded-full"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-56 sm:h-56 bg-rdBlue/20 blur-[80px] sm:blur-[90px] rounded-full"></div>
 
-  <div class="relative">
+        <div class="relative">
 
-    <!-- Foto de perfil responsive -->
-    <div class="mx-auto w-32 h-32 sm:w-44 sm:h-44 rounded-full p-[3px] bg-gradient-to-br from-rdBlue to-white/10 shadow-glow">
-      <img 
-        src="assets/roberto-profile.webp" 
-        alt="Foto de Roberto Durán"
-        class="w-full h-full object-cover rounded-full bg-rdGraphite"
-        loading="lazy"
-      />
-    </div>
+          <!-- Foto de perfil responsive -->
+          <div class="mx-auto w-32 h-32 sm:w-44 sm:h-44 rounded-full p-[3px] bg-gradient-to-br from-rdBlue to-white/10 shadow-glow">
+            <img 
+              src="assets/roberto-profile.webp" 
+              alt="Foto de Roberto Durán"
+              class="w-full h-full object-cover rounded-full bg-rdGraphite"
+              loading="lazy"
+            />
+          </div>
 
-    <p class="mt-5 sm:mt-7 text-[0.65rem] sm:text-sm uppercase tracking-[0.32em] sm:tracking-[0.35em] text-rdBlue font-semibold">
-      Arquitecto Digital
-    </p>
+          <p class="mt-5 sm:mt-7 text-[0.65rem] sm:text-sm uppercase tracking-[0.32em] sm:tracking-[0.35em] text-rdBlue font-semibold">
+            Arquitecto Digital
+          </p>
 
-    <h1 class="font-oxanium text-[clamp(2.05rem,8.4vw,3.25rem)] font-extrabold tracking-[-0.05em] mt-2 sm:mt-3 leading-none whitespace-nowrap">
-      ROBERTO DURÁN
-    </h1>
+          <h1 class="font-oxanium text-[clamp(2.05rem,8.4vw,3.25rem)] font-extrabold tracking-[-0.05em] mt-2 sm:mt-3 leading-none whitespace-nowrap">
+            ROBERTO DURÁN
+          </h1>
 
-    <p class="mt-4 sm:mt-5 text-rdGray text-[0.95rem] sm:text-lg leading-relaxed max-w-sm mx-auto">
-      Estratega visual y especialista en IA. Ayudo a emprendedores a escalar mediante sistemas inteligentes y diseño de alto impacto.
-    </p>
+          <p class="mt-4 sm:mt-5 text-rdGray text-[0.95rem] sm:text-lg leading-relaxed max-w-sm mx-auto">
+            Estratega visual y especialista en IA. Ayudo a emprendedores a escalar mediante sistemas inteligentes y diseño de alto impacto.
+          </p>
 
-  </div>
-</header>
+        </div>
+      </header>
 
       <div class="blue-line h-[1px] w-full opacity-80"></div>
 
       <!-- Manifesto -->
       <section class="px-5 sm:px-7 py-4 sm:py-6">
-  <div class="rounded-[1.6rem] sm:rounded-3xl bg-white/[0.035] border border-white/10 p-4 sm:p-6">
-    <p class="font-oxanium text-[1.35rem] sm:text-2xl font-bold leading-tight">
-      “La inteligencia artificial no reemplaza la creatividad. 
-      <span class="text-rdBlue">La potencia.</span>”
-    </p>
-    <p class="text-rdGray text-[0.95rem] sm:text-base mt-3 sm:mt-4 leading-relaxed">
-      Tecnología, diseño estratégico y automatización aplicados a negocios reales.
-    </p>
-  </div>
-</section>
+        <div class="rounded-[1.6rem] sm:rounded-3xl bg-white/[0.035] border border-white/10 p-4 sm:p-6">
+          <p class="font-oxanium text-[1.35rem] sm:text-2xl font-bold leading-tight">
+            “La inteligencia artificial no reemplaza la creatividad. 
+            <span class="text-rdBlue">La potencia.</span>”
+          </p>
+          <p class="text-rdGray text-[0.95rem] sm:text-base mt-3 sm:mt-4 leading-relaxed">
+            Tecnología, diseño estratégico y automatización aplicados a negocios reales.
+          </p>
+        </div>
+      </section>
 
       <!-- Action Buttons -->
       <section class="px-7 pb-6 space-y-3" id="servicios">
@@ -229,7 +272,7 @@
         </a>
 
         <a 
-          href="https://wa.me/573232503496?text=Hola%20Roberto%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20curso%20de%20sublimaci%C3%B3n."" 
+          href="https://wa.me/573232503496?text=Hola%20Roberto%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20curso%20de%20sublimaci%C3%B3n." 
           target="_blank"
           rel="noopener"
           class="action-btn flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
@@ -356,6 +399,19 @@
 
     </article>
   </main>
+
+  <!-- Botón flotante WhatsApp -->
+  <a 
+    href="https://wa.me/573232503496?text=Hola%20Roberto%2C%20quiero%20informaci%C3%B3n%20sobre%20tus%20servicios."
+    target="_blank"
+    rel="noopener"
+    aria-label="Escribir a Roberto Durán por WhatsApp"
+    class="whatsapp-floating"
+  >
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16.02 3C8.84 3 3 8.72 3 15.76c0 2.25.61 4.45 1.76 6.38L3 29l7.05-1.79a13.2 13.2 0 0 0 5.97 1.45C23.2 28.66 29 22.93 29 15.89S23.2 3 16.02 3Zm0 23.48c-1.94 0-3.82-.51-5.47-1.48l-.39-.23-4.18 1.06 1.11-4.02-.26-.41a10.56 10.56 0 0 1-1.66-5.64c0-5.83 4.86-10.58 10.85-10.58s10.85 4.75 10.85 10.58-4.86 10.72-10.85 10.72Zm5.95-7.91c-.33-.16-1.93-.94-2.23-1.05-.3-.11-.52-.16-.74.16-.22.32-.85 1.05-1.04 1.27-.19.21-.38.24-.71.08-.33-.16-1.39-.5-2.65-1.59-.98-.86-1.64-1.93-1.83-2.25-.19-.32-.02-.5.14-.66.15-.15.33-.38.49-.56.16-.19.22-.32.33-.54.11-.21.05-.4-.03-.56-.08-.16-.74-1.75-1.01-2.4-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.4-.3.32-1.14 1.09-1.14 2.67s1.17 3.1 1.33 3.31c.16.21 2.3 3.44 5.58 4.82.78.33 1.39.53 1.86.68.78.24 1.49.21 2.05.13.63-.09 1.93-.78 2.2-1.53.27-.75.27-1.4.19-1.53-.08-.13-.3-.21-.63-.37Z"/>
+    </svg>
+  </a>
 
   <script>
     const CONTACT_FILE = "Roberto-Duran.vcf";
