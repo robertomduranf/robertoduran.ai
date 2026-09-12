@@ -1,0 +1,40 @@
+{
+  "name": "Alfajores con Amor — Control",
+  "short_name": "AlfajoresControl",
+  "description": "Sistema de control y ventas para Alfajores con Amor",
+  "start_url": "./AlfajoresConAmor_Control.html",
+  "display": "standalone",
+  "background_color": "#fceed6",
+  "theme_color": "#824913",
+  "orientation": "any",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Nueva Venta",
+      "short_name": "Venta",
+      "description": "Registrar nueva venta",
+      "url": "./AlfajoresConAmor_Control.html#nueva-entrada"
+    },
+    {
+      "name": "Ver Deudores",
+      "short_name": "Deudores",
+      "description": "Ver deudas pendientes",
+      "url": "./AlfajoresConAmor_Control.html#deudores"
+    }
+  ]
+}
