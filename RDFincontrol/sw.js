@@ -3,7 +3,7 @@
 //  Maneja caché offline + notificaciones de cobro
 // ============================================================
 
-var CACHE_NAME = 'fincontrol-v1.3.16-brand';
+var CACHE_NAME = 'fincontrol-v1.3.17-brand';
 var ASSETS = [
   './',
   './AlfajoresConAmor_Control.html',
