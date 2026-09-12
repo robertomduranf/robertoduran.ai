@@ -368,10 +368,10 @@ var db = {
     gasUrl: CONFIG_API_URL, // sobreescrita en el boot — editar solo ahi
     waPrefijo: '57',
     waMsgTemplate: 'Hola {nombre}, gracias por tu compra. \u00A1Fue un placer atenderte!',
-    waMsgCobro: 'Hola {nombre}, te recordamos que ma\u00F1ana {fecha} acordamos el pago de tu pedido de tu pedido por un valor de ${valor}. \u00BFDeseas pagar por transferencia o prefieres que pasemos a recogerte el efectivo? \uD83E\uDDC1',
+    waMsgCobro: 'Hola {nombre}, te recordamos que ma\u00F1ana {fecha} acordamos el pago de tu pedido de tu pedido por un valor de ${valor}. \u00BFDeseas pagar por transferencia o prefieres que pasemos a recogerte el efectivo? ',
     waMsgCanje: 'Hola {nombre}, aplicamos un descuento del {descuento}% en tu compra! Valor antes: ${totalAntes}, con descuento: ${totalDespues}. Canjeaste {ptsCanjeados} Puntos y te quedan {ptsTotales} pts.',
-    waMsgPostventa: 'Hola {nombre}, \u00BFqu\u00e9 tal te parecieron tu compra? Esperamos que los hayas disfrutado much\u00edsimo \uD83E\uDDC1 Tu opini\u00f3n es muy importante para nosotros.',
-    waMsgPuntos: 'Hola {nombre}, tienes acumulado {puntos} Puntos \uD83C\uDF6B \u00A1Has ganado un bono descuento de {descuento}% disponible hasta {fecha}! No te lo pierdas, \u00FAs\u00E1lo en tu pr\u00F3xima compra. \uD83E\uDDC1',
+    waMsgPostventa: 'Hola {nombre}, \u00BFqu\u00e9 tal te parecieron tu compra? Esperamos que los hayas disfrutado much\u00edsimo  Tu opini\u00f3n es muy importante para nosotros.',
+    waMsgPuntos: 'Hola {nombre}, tienes acumulado {puntos} Puntos \uD83C\uDF6B \u00A1Has ganado un bono descuento de {descuento}% disponible hasta {fecha}! No te lo pierdas, \u00FAs\u00E1lo en tu pr\u00F3xima compra. ',
     waMsgCumpleanos: 'Hola {nombre}, \u00A1te deseamos un muy feliz cumplea\u00F1os! \uD83C\uDF82 Que lo pases incre\u00EDble, tenemos una sorpresa especial para ti.',
     ptosPorMil: 1,
     ptosReferido: 50,
@@ -2481,18 +2481,29 @@ function canjearDescuento() {
 }
 
 function buildWaMsg(nombre, producto, total, ptsGanados, ptsTotales, recibo) {
-  var tpl=db.config.waMsgTemplate||'';
-  // Compatibilidad: si la plantilla antigua no contempla recibo e items,
-  // se usa el formato transaccional solicitado sin borrar la configuración guardada.
-  if(tpl.indexOf('{recibo}')<0 || tpl.indexOf('{producto}')<0){
-    tpl='Hola {nombre} 🍫\n\nGracias por tu compra:\nRecibo #{recibo}\n\n{producto}\n\nTotal: ${total}\n\nGanaste {ptsGanados} Puntos ❤️';
+  var tpl=(db.config.waMsgTemplate||'').trim();
+
+  // La plantilla configurada en Admin es la fuente de verdad.
+  // Si no incluye datos transaccionales, se anexan automáticamente,
+  // sin introducir textos o emojis heredados de otra marca.
+  if(!tpl){
+    tpl='Hola {nombre}, gracias por tu compra.';
   }
+
+  var extra=[];
+  if(tpl.indexOf('{recibo}')<0) extra.push('Recibo #{recibo}');
+  if(tpl.indexOf('{producto}')<0) extra.push('{producto}');
+  if(tpl.indexOf('{total}')<0) extra.push('Total: ${total}');
+  if(tpl.indexOf('{ptsGanados}')<0) extra.push('Ganaste {ptsGanados} Puntos');
+
+  if(extra.length) tpl += '\n\n' + extra.join('\n');
+
   return tpl
     .replace(/\{nombre\}/g,nombre||'')
     .replace(/\{producto\}/g,producto||'')
-    .replace(/\{total\}/g,total!==undefined&&total!==null?fmt(total):'')
-    .replace(/\{ptsGanados\}/g,ptsGanados||'0')
-    .replace(/\{ptsTotales\}/g,ptsTotales||'0')
+    .replace(/\{total\}/g,fmt(total))
+    .replace(/\{ptsGanados\}/g,ptsGanados||0)
+    .replace(/\{ptsTotales\}/g,ptsTotales||0)
     .replace(/\{recibo\}/g,recibo||'');
 }
 
