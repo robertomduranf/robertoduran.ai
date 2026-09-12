@@ -362,7 +362,7 @@ var db = {
   deudores: [],
   puntos: {},
   config: {
-    gasUrl: 'https://script.google.com/macros/s/AKfycbzqBre0_Q891jBY95tuxoKavGgrAhq8jUXKyHEH7TTyEhL10z3W7Ho8Gc7F3igcVts/exec', // sobreescrita en el boot — editar solo ahi
+    gasUrl: 'https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec', // sobreescrita en el boot — editar solo ahi
     waPrefijo: '57',
     waMsgTemplate: 'Hola {nombre}, gracias por tu compra. \u00A1Fue un placer atenderte!',
     waMsgCobro: 'Hola {nombre}, te recordamos que ma\u00F1ana {fecha} acordamos el pago de tu pedido de los deliciosos Alfajores por un valor de ${valor}. \u00BFDeseas pagar por transferencia o prefieres que pasemos a recogerte el efectivo? \uD83E\uDDC1',
@@ -678,7 +678,15 @@ function doLogin() {
 document.getElementById('li-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 document.getElementById('li-user').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('li-pass').focus();});
 
+function normalizarRol(rol) {
+  var r=String(rol||'').trim().toLowerCase();
+  if(r==='administrador') r='admin';
+  if(r==='usuario') r='user';
+  return r;
+}
+
 function loginAs(user) {
+  user=Object.assign({},user,{rol:normalizarRol(user&&user.rol)});
   db.currentUser=user;
   localStorage.setItem('aca_session', JSON.stringify(user));
   // Rescatar recibos LOCAL pendientes ANTES de limpiar
@@ -711,6 +719,7 @@ function doLogout() {
 }
 
 function applyRoleUI(rol) {
+  rol=normalizarRol(rol);
   var restricted=['historial','graficas','pyg','balance','ejecutivo','admin'];
   document.querySelectorAll('.tab-btn').forEach(function(b){
     var tab=b.getAttribute('data-tab');
@@ -721,7 +730,9 @@ function applyRoleUI(rol) {
   if(btnCsv) btnCsv.style.display=rol==='admin'?'':'none';
 }
 
-function isAdmin() { return !!(db.currentUser && db.currentUser.rol==='admin'); }
+function isAdmin() {
+  return !!(db.currentUser && normalizarRol(db.currentUser.rol)==='admin');
+}
 
 /* ===================== ALERTAS COBRO ===================== */
 function checkAlertasCobro() {
@@ -2503,7 +2514,7 @@ function agregarReferidoId(clienteId) {
 loadDB();
 aplicarApariencia();
 // Fuente de verdad unica: la URL del HTML siempre tiene prioridad sobre localStorage
-db.config.gasUrl='https://script.google.com/macros/s/AKfycbzqBre0_Q891jBY95tuxoKavGgrAhq8jUXKyHEH7TTyEhL10z3W7Ho8Gc7F3igcVts/exec';
+db.config.gasUrl='https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec';
 // Restaurar sesion si existe
 (function() {
   try {
