@@ -1,11 +1,11 @@
 {
-  "name": "Alfajores con Amor — Control",
-  "short_name": "AlfajoresControl",
-  "description": "Sistema de control y ventas para Alfajores con Amor",
+  "name": "FinControl",
+  "short_name": "FinControl",
+  "description": "Tu negocio, en equilibrio",
   "start_url": "./AlfajoresConAmor_Control.html",
   "display": "standalone",
-  "background_color": "#fceed6",
-  "theme_color": "#824913",
+  "background_color": "#FFFFFF",
+  "theme_color": "#079C58",
   "orientation": "any",
   "lang": "es",
   "icons": [
@@ -22,7 +22,10 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "productivity"],
+  "categories": [
+    "business",
+    "productivity"
+  ],
   "shortcuts": [
     {
       "name": "Nueva Venta",
