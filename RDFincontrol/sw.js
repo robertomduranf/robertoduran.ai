@@ -1,9 +1,9 @@
 // ============================================================
-//  SERVICE WORKER — Alfajores con Amor PWA
+//  SERVICE WORKER — RDFincontrol
 //  Maneja caché offline + notificaciones de cobro
 // ============================================================
 
-var CACHE_NAME = 'fincontrol-v1.3.19-brand';
+var CACHE_NAME = 'fincontrol-v1.3.20-brand';
 var ASSETS = [
   './',
   './AlfajoresConAmor_Control.html',
