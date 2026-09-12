@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alfajores con Amor &mdash; Control</title>
+<title>FinControl</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-:root{--bg:#fceed6;--bg2:#f5e2bc;--card:#fffbf2;--input:#fdf4e3;--border:#e8d5ae;--border2:#d4b896;--accent:#824913;--accent2:#a05c20;--text:#2c1a08;--text2:#6b4226;--text3:#a07040;--green:#2d7a3a;--red:#c0392b;--blue:#5a7a9a;--radius:10px;--shadow:0 2px 12px rgba(130,73,19,.13);}
+:root{--bg:#F4F6F5;--bg2:#E9EEEB;--card:#FFFFFF;--input:#F7F9F8;--border:#D9E1DD;--border2:#BFCBC5;--accent:#079C58;--accent2:#057A45;--text:#111111;--text2:#343A37;--text3:#727A76;--green:#2d7a3a;--red:#c0392b;--blue:#5a7a9a;--radius:10px;--shadow:0 2px 12px rgba(130,73,19,.13);}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#fceed6 0%,#f0d9ae 100%);}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#F4F6F5 0%,#f0d9ae 100%);}
 .login-card{background:var(--card);border-radius:18px;box-shadow:0 8px 40px rgba(130,73,19,.18);padding:44px 40px 36px;width:100%;max-width:400px;text-align:center;}
 .login-logo{width:160px;height:auto;margin-bottom:10px;}
 .login-card h2{color:var(--accent);font-size:1.35rem;margin-bottom:6px;}
@@ -65,7 +65,7 @@ td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;
 tr:hover td{background:rgba(130,73,19,.04);}
 .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.78rem;font-weight:700;}
 .badge-venta{background:#d4edda;color:#155724;}.badge-gasto{background:#f8d7da;color:#721c24;}.badge-pago{background:#cce5ff;color:#004085;}
-.badge-admin{background:#824913;color:#fff;}.badge-vendedor{background:#a05c20;color:#fff;}
+.badge-admin{background:#079C58;color:#fff;}.badge-vendedor{background:#057A45;color:#fff;}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--card);border-radius:14px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.25);}
@@ -131,19 +131,19 @@ tr:hover td{background:rgba(130,73,19,.04);}
 }
 </style>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#824913">
+<meta name="theme-color" content="#079C58">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AlfajoresControl">
+<meta name="apple-mobile-web-app-title" content="FinControl" id="brand-apple-title">
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
 
 <div id="login-screen">
   <div class="login-card">
-    <img class="login-logo" src="./logo.png" alt="Alfajores con Amor">
-    <h2>Sistema de Control</h2>
-    <p>Inicia sesi&oacute;n para continuar</p>
+    <img class="login-logo" id="brand-logo-login" src="./logo.png" alt="Logo del negocio">
+    <h2 id="brand-login-title">Sistema de Control</h2>
+    <p id="brand-login-subtitle">Inicia sesi&oacute;n para continuar</p>
     <label for="li-user">Usuario</label>
     <input type="text" id="li-user" placeholder="Tu nombre de usuario" autocomplete="username">
     <label for="li-pass">Contrase&ntilde;a</label>
@@ -153,17 +153,17 @@ tr:hover td{background:rgba(130,73,19,.04);}
   </div>
 </div>
 
-<div id="loading-screen" style="display:none;position:fixed;inset:0;background:#fceed6;z-index:2000;flex-direction:column;align-items:center;justify-content:center;">
-  <img src="./logo.png" style="width:120px;margin-bottom:20px;opacity:.9;">
-  <div style="color:#824913;font-size:1rem;font-weight:600;margin-bottom:16px;">Cargando datos...</div>
-  <div style="width:48px;height:48px;border:4px solid #e8d5ae;border-top-color:#824913;border-radius:50%;animation:spin 1s linear infinite;"></div>
+<div id="loading-screen" style="display:none;position:fixed;inset:0;background:#F4F6F5;z-index:2000;flex-direction:column;align-items:center;justify-content:center;">
+  <img id="brand-logo-loading" src="./logo.png" style="width:120px;margin-bottom:20px;opacity:.9;" alt="Logo">
+  <div style="color:#079C58;font-size:1rem;font-weight:600;margin-bottom:16px;">Cargando datos...</div>
+  <div style="width:48px;height:48px;border:4px solid #D9E1DD;border-top-color:#079C58;border-radius:50%;animation:spin 1s linear infinite;"></div>
   <style>@keyframes spin{to{transform:rotate(360deg);}}</style>
 </div>
 
 <div id="app">
   <header>
     <div class="logo-wrap">
-      <img src="./logo-header.png" alt="Logo">
+      <img id="brand-logo-header" src="./logo-header.png" alt="Logo">
       <h1 id="header-ciudad">Medell&iacute;n</h1>
     </div>
     <div class="header-right">
@@ -215,9 +215,9 @@ tr:hover td{background:rgba(130,73,19,.04);}
             <input type="text" id="ne-cliente" placeholder="Nombre del cliente" oninput="buscarClienteSugerencia(this.value);mostrarPuntosCliente(this.value);" autocomplete="off">
             <div id="cliente-suggestions" style="position:relative;"></div>
           </div>
-          <div id="ne-puntos-info" style="display:none;margin-bottom:14px;padding:10px 14px;background:#fff9f0;border-radius:8px;border-left:4px solid #824913;">
+          <div id="ne-puntos-info" style="display:none;margin-bottom:14px;padding:10px 14px;background:#fff9f0;border-radius:8px;border-left:4px solid #079C58;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-              <span id="ne-puntos-txt" style="font-size:.88rem;color:#824913;font-weight:600;"></span>
+              <span id="ne-puntos-txt" style="font-size:.88rem;color:#079C58;font-weight:600;"></span>
               <button class="btn btn-primary btn-sm" id="ne-btn-canjear" onclick="canjearDescuento()" style="display:none;">&#x1F381; Canjear descuento</button>
             </div>
           </div>
@@ -248,8 +248,8 @@ tr:hover td{background:rgba(130,73,19,.04);}
     <div class="tab-pane" id="tab-pyg"><div class="card"><h3>&#x1F4B0; P&amp;G</h3><div class="grid-2" style="margin-bottom:14px;"><div class="form-group mb-0"><label>Desde</label><input type="date" id="pyg-desde"></div><div class="form-group mb-0"><label>Hasta</label><input type="date" id="pyg-hasta"></div></div><button class="btn btn-primary" onclick="calcPyG()" style="margin-bottom:16px;">Calcular</button><div id="pyg-resultado"></div></div></div>
     <div class="tab-pane" id="tab-balance"><div class="card"><h3>&#x2696;&#xFE0F; Balance General</h3><div class="form-group" style="max-width:200px;"><label>A&ntilde;o</label><input type="number" id="bal-anio" value="2025"></div><button class="btn btn-primary" onclick="calcBalance()" style="margin-bottom:16px;">Calcular</button><div id="balance-resultado"></div></div></div>
     <div class="tab-pane" id="tab-agregar-cliente"><div class="card" style="max-width:500px;"><h3>&#x2795; Agregar / Editar Cliente</h3><input type="hidden" id="ac-id"><div class="form-group"><label>Nombre</label><input type="text" id="ac-nombre" placeholder="Nombre completo"></div><div class="form-group"><label>Tel&eacute;fono</label><input type="text" id="ac-tel" placeholder="Ej: 3001234567"></div><div class="form-group"><label>Email</label><input type="email" id="ac-email" placeholder="correo@ejemplo.com"></div><div class="form-group"><label>Ciudad</label><input type="text" id="ac-ciudad" placeholder="Ciudad"></div><div class="form-group"><label>Notas</label><textarea id="ac-notas" placeholder="Notas sobre el cliente"></textarea></div><div class="form-group"><label>Cumplea&ntilde;os <small style="color:var(--text3);">(DD/MM o DD/MM/AAAA)</small></label><input type="text" id="ac-cumpleanos" placeholder="Ej: 15/03 o 15/03/1990" maxlength="10"><small>D&iacute;a y mes son obligatorios, a&ntilde;o es opcional.</small></div><div class="flex-end"><button class="btn btn-secondary" onclick="limpiarCliente()">Limpiar</button><button class="btn btn-primary" onclick="guardarCliente()">Guardar &#x2713;</button></div></div></div>
-    <div class="tab-pane" id="tab-crm"><div class="card"><h3>&#x1F465; CRM &mdash; Clientes &amp; Puntos Dulces</h3><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;"><div class="form-group" style="max-width:320px;margin-bottom:0;"><input type="text" id="crm-buscar" placeholder="Buscar cliente..." oninput="renderCRM()"></div><div style="display:flex;align-items:center;gap:10px;"><span id="crm-contador" style="font-size:.85rem;color:#a07040;font-weight:600;"></span><button class="btn btn-secondary btn-sm" onclick="exportarContactosCSV()" title="Exportar contactos como CSV" id="btn-exportar-csv" style="display:none;">&#x1F4E5; Exportar CSV</button></div></div><div id="crm-lista"></div></div></div>
-    <div class="tab-pane" id="tab-postventa"><div class="card"><h3>&#x1F4AC; Postventa</h3><p style="color:#6b4226;font-size:.9rem;margin-bottom:16px;">Clientes que han comprado y a&uacute;n no han recibido el mensaje de postventa.</p><div class="form-group" style="max-width:320px;margin-bottom:14px;"><input type="text" id="pv-buscar" placeholder="Buscar cliente..." oninput="renderPostventa()"></div><div id="postventa-lista"></div></div></div>
+    <div class="tab-pane" id="tab-crm"><div class="card"><h3>&#x1F465; CRM &mdash; Clientes &amp; Puntos Dulces</h3><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;"><div class="form-group" style="max-width:320px;margin-bottom:0;"><input type="text" id="crm-buscar" placeholder="Buscar cliente..." oninput="renderCRM()"></div><div style="display:flex;align-items:center;gap:10px;"><span id="crm-contador" style="font-size:.85rem;color:#727A76;font-weight:600;"></span><button class="btn btn-secondary btn-sm" onclick="exportarContactosCSV()" title="Exportar contactos como CSV" id="btn-exportar-csv" style="display:none;">&#x1F4E5; Exportar CSV</button></div></div><div id="crm-lista"></div></div></div>
+    <div class="tab-pane" id="tab-postventa"><div class="card"><h3>&#x1F4AC; Postventa</h3><p style="color:#343A37;font-size:.9rem;margin-bottom:16px;">Clientes que han comprado y a&uacute;n no han recibido el mensaje de postventa.</p><div class="form-group" style="max-width:320px;margin-bottom:14px;"><input type="text" id="pv-buscar" placeholder="Buscar cliente..." oninput="renderPostventa()"></div><div id="postventa-lista"></div></div></div>
     <div class="tab-pane" id="tab-ejecutivo"><div class="card"><h3>&#x1F3C6; Resumen Ejecutivo</h3><div class="form-group" style="max-width:160px;margin-bottom:14px;"><label>A&ntilde;o</label><input type="number" id="ej-anio" value="2025"></div><button class="btn btn-primary" onclick="calcEjecutivo()" style="margin-bottom:16px;">Generar</button><div id="ejecutivo-resultado"></div></div></div>
     <div class="tab-pane" id="tab-admin">
       <div class="grid-2" id="admin-grid">
@@ -264,6 +264,52 @@ tr:hover td{background:rgba(130,73,19,.04);}
           <div class="form-group"><label>Mensaje Cumplea&ntilde;os</label><textarea id="cfg-wacumple" rows="3"></textarea><small>Variable: {nombre}</small></div>
           <button class="btn btn-primary" onclick="guardarWaConfig()">Guardar Mensajes WA</button>
         </div>
+        <div class="card" style="grid-column:span 2;">
+          <h3>&#x1F3A8; Apariencia y Marca</h3>
+          <p style="color:var(--text2);font-size:.88rem;margin-bottom:16px;">Personaliza colores y logos sin modificar el c&oacute;digo. Los cambios se guardan en Config y se aplican al iniciar la app.</p>
+
+          <div class="grid-2">
+            <div class="form-group"><label>Nombre comercial</label><input type="text" id="cfg-business-name" placeholder="FinControl"></div>
+            <div class="form-group"><label>Nombre de la aplicaci&oacute;n</label><input type="text" id="cfg-app-name" placeholder="FinControl"></div>
+            <div class="form-group"><label>T&iacute;tulo del login</label><input type="text" id="cfg-login-title" placeholder="FinControl"></div>
+            <div class="form-group"><label>Subt&iacute;tulo del login</label><input type="text" id="cfg-login-subtitle" placeholder="Tu negocio, en equilibrio"></div>
+            <div class="form-group"><label>Texto de cabecera</label><input type="text" id="cfg-header-label" placeholder="FinControl"></div>
+            <div class="form-group"><label>T&iacute;tulo de notificaciones</label><input type="text" id="cfg-notification-title" placeholder="FinControl"></div>
+          </div>
+
+          <div class="grid-3">
+            <div class="form-group"><label>Color principal</label><input type="color" id="cfg-theme-accent" value="#079C58"></div>
+            <div class="form-group"><label>Color secundario</label><input type="color" id="cfg-theme-accent2" value="#057A45"></div>
+            <div class="form-group"><label>Color de texto</label><input type="color" id="cfg-theme-text" value="#111111"></div>
+            <div class="form-group"><label>Fondo principal</label><input type="color" id="cfg-theme-bg" value="#F4F6F5"></div>
+            <div class="form-group"><label>Fondo secundario</label><input type="color" id="cfg-theme-bg2" value="#E9EEEB"></div>
+            <div class="form-group"><label>Tarjetas</label><input type="color" id="cfg-theme-card" value="#FFFFFF"></div>
+          </div>
+
+          <div class="grid-2" style="margin-top:6px;">
+            <div class="form-group">
+              <label>Logo principal / login</label>
+              <input type="file" id="cfg-logo-main-file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="previewLogoArchivo(this,'main')">
+              <small>Se redimensiona autom&aacute;ticamente para guardarlo en la configuraci&oacute;n.</small>
+              <div style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);text-align:center;">
+                <img id="cfg-logo-main-preview" src="./logo.png" alt="Vista previa logo principal" style="max-width:180px;max-height:90px;object-fit:contain;">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Logo de cabecera</label>
+              <input type="file" id="cfg-logo-header-file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="previewLogoArchivo(this,'header')">
+              <small>Se recomienda una versi&oacute;n horizontal o compacta.</small>
+              <div style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);text-align:center;">
+                <img id="cfg-logo-header-preview" src="./logo-header.png" alt="Vista previa logo cabecera" style="max-width:180px;max-height:90px;object-fit:contain;">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-end mt-8">
+            <button class="btn btn-secondary" onclick="restaurarApariencia()">Restaurar dise&ntilde;o original</button>
+            <button class="btn btn-primary" onclick="guardarApariencia()">Guardar apariencia</button>
+          </div>
+        </div>
         <div class="card"><h3>&#x1F36B; Puntos Dulces</h3>
           <div class="form-group"><label>Puntos por cada $1.000</label><input type="number" id="cfg-ptosmil" min="0.1" step="0.1"></div>
           <div class="form-group"><label>Puntos por referido</label><input type="number" id="cfg-ptosref" min="1"></div>
@@ -276,7 +322,7 @@ tr:hover td{background:rgba(130,73,19,.04);}
         <div class="card" style="grid-column:span 2;"><h3>&#x1F6CD;&#xFE0F; Cat&aacute;logo de Productos</h3><div id="catalogo-lista"></div><button class="btn btn-primary mt-8" onclick="abrirModalProducto(null)">&#x2795; Nuevo Producto</button></div>
         <div class="card" style="grid-column:span 2;">
           <h3>&#x1F381; Promociones</h3>
-          <p style="color:#6b4226;font-size:.9rem;margin-bottom:14px;">Configura promociones por producto y vigencia. En esta etapa se guardan y administran, pero todav&iacute;a no se aplican autom&aacute;ticamente al carrito.</p>
+          <p style="color:#343A37;font-size:.9rem;margin-bottom:14px;">Configura promociones por producto y vigencia. En esta etapa se guardan y administran, pero todav&iacute;a no se aplican autom&aacute;ticamente al carrito.</p>
           <div id="promociones-lista"></div>
           <button class="btn btn-primary mt-8" onclick="abrirModalPromocion(null)">&#x2795; Nueva Promoci&oacute;n</button>
         </div>
@@ -303,8 +349,8 @@ tr:hover td{background:rgba(130,73,19,.04);}
 </div></div>
 <div class="modal-overlay" id="modal-usuario"><div class="modal"><h3 id="modal-usr-title">Usuario</h3><input type="hidden" id="mu-id"><div class="form-group"><label>Nombre completo</label><input type="text" id="mu-nombre"></div><div class="form-group"><label>Username</label><input type="text" id="mu-username"></div><div class="form-group"><label>Contrase&ntilde;a</label><input type="password" id="mu-pass"></div><div class="form-group"><label>Rol</label><select id="mu-rol"><option value="vendedor">Vendedor</option><option value="admin">Administrador</option></select></div><div class="modal-footer"><button class="btn btn-secondary" onclick="cerrarModal('modal-usuario')">Cancelar</button><button class="btn btn-primary" onclick="guardarUsuario()">Guardar</button></div></div></div>
 <div class="modal-overlay" id="modal-wa"><div class="modal wa-modal"><div class="wa-icon">&#x1F4AC;</div><h3>&iexcl;Venta registrada!</h3><p>&iquest;Enviar mensaje a <strong id="wa-nombre-display">&mdash;</strong>?</p><div class="wa-preview" id="wa-preview-msg"></div><div class="modal-footer" style="justify-content:center;gap:14px;"><button class="btn btn-secondary" onclick="cerrarModal('modal-wa')">Omitir</button><button class="btn btn-wa" onclick="abrirWhatsApp()">&#x1F4F1; Abrir WhatsApp</button></div></div></div>
-<div class="modal-overlay" id="modal-alerta-cobro"><div class="modal"><h3>&#x23F0; Cobros para ma&ntilde;ana</h3><p style="color:#6b4226;margin-bottom:14px;">Los siguientes clientes tienen pagos programados para ma&ntilde;ana.</p><div id="alerta-cobro-lista"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="cerrarModal('modal-alerta-cobro')">Cerrar</button></div></div></div>
-<div class="modal-overlay" id="modal-alerta-cumple"><div class="modal"><h3>&#x1F382; Cumplea&ntilde;os hoy</h3><p style="color:#6b4226;margin-bottom:14px;">Los siguientes clientes cumplen a&ntilde;os hoy.</p><div id="alerta-cumple-lista"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="cerrarModal('modal-alerta-cumple')">Cerrar</button></div></div></div>
+<div class="modal-overlay" id="modal-alerta-cobro"><div class="modal"><h3>&#x23F0; Cobros para ma&ntilde;ana</h3><p style="color:#343A37;margin-bottom:14px;">Los siguientes clientes tienen pagos programados para ma&ntilde;ana.</p><div id="alerta-cobro-lista"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="cerrarModal('modal-alerta-cobro')">Cerrar</button></div></div></div>
+<div class="modal-overlay" id="modal-alerta-cumple"><div class="modal"><h3>&#x1F382; Cumplea&ntilde;os hoy</h3><p style="color:#343A37;margin-bottom:14px;">Los siguientes clientes cumplen a&ntilde;os hoy.</p><div id="alerta-cumple-lista"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="cerrarModal('modal-alerta-cumple')">Cerrar</button></div></div></div>
 
 <script>
 var db = {
@@ -318,17 +364,31 @@ var db = {
   config: {
     gasUrl: 'https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec', // sobreescrita en el boot — editar solo ahi
     waPrefijo: '57',
-    waMsgTemplate: 'Hola {nombre}, gracias por tu compra en Alfajores con Amor \uD83E\uDDC1 \u00A1Fue un placer atenderte!',
+    waMsgTemplate: 'Hola {nombre}, gracias por tu compra. \u00A1Fue un placer atenderte!',
     waMsgCobro: 'Hola {nombre}, te recordamos que ma\u00F1ana {fecha} acordamos el pago de tu pedido de los deliciosos Alfajores por un valor de ${valor}. \u00BFDeseas pagar por transferencia o prefieres que pasemos a recogerte el efectivo? \uD83E\uDDC1',
     waMsgCanje: 'Hola {nombre}, aplicamos un descuento del {descuento}% en tu compra! Valor antes: ${totalAntes}, con descuento: ${totalDespues}. Canjeaste {ptsCanjeados} Puntos Dulces y te quedan {ptsTotales} pts.',
     waMsgPostventa: 'Hola {nombre}, \u00BFqu\u00e9 tal te parecieron los Alfajores? Esperamos que los hayas disfrutado much\u00edsimo \uD83E\uDDC1 Tu opini\u00f3n es muy importante para nosotros.',
     waMsgPuntos: 'Hola {nombre}, tienes acumulado {puntos} Puntos Dulces \uD83C\uDF6B \u00A1Has ganado un bono descuento de {descuento}% disponible hasta {fecha}! No te lo pierdas, \u00FAs\u00E1lo en tu pr\u00F3xima compra. \uD83E\uDDC1',
-    waMsgCumpleanos: 'Hola {nombre}, \u00A1en Alfajores con Amor te deseamos un muy feliz cumplea\u00F1os! \uD83C\uDF82\uD83E\uDDC1 Que lo pases incre\u00EDble, te tenemos una sorpresita especial.',
+    waMsgCumpleanos: 'Hola {nombre}, \u00A1te deseamos un muy feliz cumplea\u00F1os! \uD83C\uDF82 Que lo pases incre\u00EDble, tenemos una sorpresa especial para ti.',
     ptosPorMil: 1,
     ptosReferido: 50,
     ptosUmbral: 100,
     descuentoPct: 10,
     bonoDias: 30,
+    themeAccent: '#079C58',
+    themeAccent2: '#057A45',
+    themeBg: '#F4F6F5',
+    themeBg2: '#E9EEEB',
+    themeCard: '#FFFFFF',
+    themeText: '#111111',
+    logoMain: '',
+    logoHeader: '',
+    businessName: 'FinControl',
+    appName: 'FinControl',
+    loginTitle: 'FinControl',
+    loginSubtitle: 'Tu negocio, en equilibrio',
+    headerLabel: 'FinControl',
+    notificationTitle: 'FinControl',
     usuarios: [
       {id:'u1',nombre:'Katherine',username:'Katherine',password:'1818',rol:'admin'},
       {id:'u2',nombre:'Roberto',username:'Roberto',password:'1313',rol:'admin'}
@@ -377,6 +437,200 @@ function loadDB() {
       }
     }
   } catch(e) { console.warn('loadDB', e); }
+}
+
+
+/* ===================== APARIENCIA / MARCA ===================== */
+var BRAND_DEFAULTS = {
+  themeAccent:'#079C58',
+  themeAccent2:'#057A45',
+  themeBg:'#F4F6F5',
+  themeBg2:'#E9EEEB',
+  themeCard:'#FFFFFF',
+  themeText:'#111111',
+  logoMain:'',
+  logoHeader:'',
+  businessName:'FinControl',
+  appName:'FinControl',
+  loginTitle:'FinControl',
+  loginSubtitle:'Tu negocio, en equilibrio',
+  headerLabel:'FinControl',
+  notificationTitle:'FinControl'
+};
+
+function valorColorSeguro(v, fallback) {
+  return /^#[0-9a-f]{6}$/i.test(String(v||'')) ? String(v) : fallback;
+}
+
+function aplicarApariencia() {
+  var c=db.config||{};
+  var root=document.documentElement;
+
+  root.style.setProperty('--accent', valorColorSeguro(c.themeAccent, BRAND_DEFAULTS.themeAccent));
+  root.style.setProperty('--accent2', valorColorSeguro(c.themeAccent2, BRAND_DEFAULTS.themeAccent2));
+  root.style.setProperty('--bg', valorColorSeguro(c.themeBg, BRAND_DEFAULTS.themeBg));
+  root.style.setProperty('--bg2', valorColorSeguro(c.themeBg2, BRAND_DEFAULTS.themeBg2));
+  root.style.setProperty('--card', valorColorSeguro(c.themeCard, BRAND_DEFAULTS.themeCard));
+  root.style.setProperty('--text', valorColorSeguro(c.themeText, BRAND_DEFAULTS.themeText));
+
+  var logoMain=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo.png';
+  var logoHeader=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header.png';
+
+  var businessName=String(c.businessName||BRAND_DEFAULTS.businessName).trim();
+  var appName=String(c.appName||BRAND_DEFAULTS.appName).trim();
+  var loginTitle=String(c.loginTitle||BRAND_DEFAULTS.loginTitle).trim();
+  var loginSubtitle=String(c.loginSubtitle||BRAND_DEFAULTS.loginSubtitle).trim();
+  var headerLabel=String(c.headerLabel||BRAND_DEFAULTS.headerLabel).trim();
+
+  var l1=document.getElementById('brand-logo-login');
+  var l2=document.getElementById('brand-logo-loading');
+  var lh=document.getElementById('brand-logo-header');
+  if(l1){ l1.src=logoMain; l1.alt=businessName; }
+  if(l2){ l2.src=logoMain; l2.alt=businessName; }
+  if(lh){ lh.src=logoHeader; lh.alt=businessName; }
+
+  var t=document.getElementById('brand-login-title');
+  var s=document.getElementById('brand-login-subtitle');
+  var h=document.getElementById('header-ciudad');
+  if(t) t.textContent=loginTitle;
+  if(s) s.textContent=loginSubtitle;
+  if(h) h.textContent=headerLabel;
+
+  document.title=(businessName ? businessName+' — ' : '')+appName;
+
+  var apple=document.getElementById('brand-apple-title');
+  if(apple) apple.setAttribute('content',appName);
+}
+
+function cargarAparienciaAdmin() {
+  var c=db.config||{};
+
+  var textos={
+    'cfg-business-name':c.businessName||BRAND_DEFAULTS.businessName,
+    'cfg-app-name':c.appName||BRAND_DEFAULTS.appName,
+    'cfg-login-title':c.loginTitle||BRAND_DEFAULTS.loginTitle,
+    'cfg-login-subtitle':c.loginSubtitle||BRAND_DEFAULTS.loginSubtitle,
+    'cfg-header-label':c.headerLabel||BRAND_DEFAULTS.headerLabel,
+    'cfg-notification-title':c.notificationTitle||BRAND_DEFAULTS.notificationTitle
+  };
+  Object.keys(textos).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.value=textos[id];
+  });
+
+  var campos={
+    'cfg-theme-accent':valorColorSeguro(c.themeAccent,BRAND_DEFAULTS.themeAccent),
+    'cfg-theme-accent2':valorColorSeguro(c.themeAccent2,BRAND_DEFAULTS.themeAccent2),
+    'cfg-theme-bg':valorColorSeguro(c.themeBg,BRAND_DEFAULTS.themeBg),
+    'cfg-theme-bg2':valorColorSeguro(c.themeBg2,BRAND_DEFAULTS.themeBg2),
+    'cfg-theme-card':valorColorSeguro(c.themeCard,BRAND_DEFAULTS.themeCard),
+    'cfg-theme-text':valorColorSeguro(c.themeText,BRAND_DEFAULTS.themeText)
+  };
+  Object.keys(campos).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.value=campos[id];
+  });
+
+  var pm=document.getElementById('cfg-logo-main-preview');
+  var ph=document.getElementById('cfg-logo-header-preview');
+  if(pm) pm.src=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo.png';
+  if(ph) ph.src=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header.png';
+}
+
+function comprimirLogo(file, cb) {
+  if(!file){cb(null);return;}
+  if(file.size>5*1024*1024){alert('El logo supera 5 MB. Usa una imagen más pequeña.');cb(null);return;}
+
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var maxW=420,maxH=180;
+      var scale=Math.min(1,maxW/img.width,maxH/img.height);
+      var w=Math.max(1,Math.round(img.width*scale));
+      var h=Math.max(1,Math.round(img.height*scale));
+      var canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      var ctx=canvas.getContext('2d');
+      ctx.clearRect(0,0,w,h);
+      ctx.drawImage(img,0,0,w,h);
+
+      var data=canvas.toDataURL('image/webp',0.82);
+      if(data.length>45000){
+        data=canvas.toDataURL('image/webp',0.60);
+      }
+      if(data.length>45000){
+        alert('El logo sigue siendo demasiado pesado. Usa una imagen más simple o pequeña.');
+        cb(null);
+        return;
+      }
+      cb(data);
+    };
+    img.onerror=function(){alert('No se pudo leer la imagen.');cb(null);};
+    img.src=e.target.result;
+  };
+  reader.onerror=function(){alert('No se pudo leer el archivo.');cb(null);};
+  reader.readAsDataURL(file);
+}
+
+function previewLogoArchivo(input,tipo) {
+  if(!input||!input.files||!input.files[0]) return;
+  comprimirLogo(input.files[0],function(data){
+    if(!data) return;
+    if(tipo==='main'){
+      db.config.logoMain=data;
+      var p=document.getElementById('cfg-logo-main-preview');if(p)p.src=data;
+    }else{
+      db.config.logoHeader=data;
+      var h=document.getElementById('cfg-logo-header-preview');if(h)h.src=data;
+    }
+  });
+}
+
+function guardarApariencia() {
+  db.config.businessName=(document.getElementById('cfg-business-name').value||'').trim()||BRAND_DEFAULTS.businessName;
+  db.config.appName=(document.getElementById('cfg-app-name').value||'').trim()||BRAND_DEFAULTS.appName;
+  db.config.loginTitle=(document.getElementById('cfg-login-title').value||'').trim()||BRAND_DEFAULTS.loginTitle;
+  db.config.loginSubtitle=(document.getElementById('cfg-login-subtitle').value||'').trim()||BRAND_DEFAULTS.loginSubtitle;
+  db.config.headerLabel=(document.getElementById('cfg-header-label').value||'').trim()||BRAND_DEFAULTS.headerLabel;
+  db.config.notificationTitle=(document.getElementById('cfg-notification-title').value||'').trim()||BRAND_DEFAULTS.notificationTitle;
+
+  db.config.themeAccent=document.getElementById('cfg-theme-accent').value;
+  db.config.themeAccent2=document.getElementById('cfg-theme-accent2').value;
+  db.config.themeBg=document.getElementById('cfg-theme-bg').value;
+  db.config.themeBg2=document.getElementById('cfg-theme-bg2').value;
+  db.config.themeCard=document.getElementById('cfg-theme-card').value;
+  db.config.themeText=document.getElementById('cfg-theme-text').value;
+
+  aplicarApariencia();
+  saveDB();
+
+  sincronizar('saveConfig',db.config,function(ok){
+    if(ok) alert('Apariencia guardada ✓');
+    else alert('La apariencia quedó guardada en este dispositivo, pero no se pudo sincronizar con Google Sheets.');
+  });
+}
+
+function restaurarApariencia() {
+  if(!confirm('¿Restaurar los colores y logos originales?')) return;
+
+  Object.keys(BRAND_DEFAULTS).forEach(function(k){
+    db.config[k]=BRAND_DEFAULTS[k];
+  });
+
+  var fm=document.getElementById('cfg-logo-main-file');
+  var fh=document.getElementById('cfg-logo-header-file');
+  if(fm) fm.value='';
+  if(fh) fh.value='';
+
+  cargarAparienciaAdmin();
+  aplicarApariencia();
+  saveDB();
+
+  sincronizar('saveConfig',db.config,function(ok){
+    if(ok) alert('Diseño original restaurado ✓');
+    else alert('Diseño restaurado localmente. No se pudo sincronizar con Google Sheets.');
+  });
 }
 
 /* ===================== AUTH ===================== */
@@ -477,7 +731,7 @@ function checkAlertasCobro() {
   var pendientes = db.deudores.filter(function(d){return d.estado==='pendiente'&&d.fechaCobro===mananaStr;});
   if(!pendientes.length) return;
   var lista = pendientes.map(function(d){
-    return '<div style="padding:10px;background:#fff9f0;border-radius:8px;border-left:4px solid #824913;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">'
+    return '<div style="padding:10px;background:#fff9f0;border-radius:8px;border-left:4px solid #079C58;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">'
       +'<div><strong>'+d.clienteNombre+'</strong><br><small>Cobro: '+d.fechaCobro+' &mdash; $'+fmt(d.valor)+'</small></div>'
       +(isAdmin()?'<button class="btn btn-wa btn-sm" onclick="waCobroDirecto(\''+d.id+'\')">&#x1F4AC; WA</button>':'')
       +'</div>';
@@ -500,7 +754,7 @@ function checkAlertasCumple() {
   var lista=cumpleaneros.map(function(c){
     var waBtn=isAdmin()&&c.tel?'<button class="btn btn-wa btn-sm" onclick="waCumpleanos(\''+c.id+'\')">&#x1F4AC; WA</button>':'';
     return '<div style="padding:10px;background:#fff9f0;border-radius:8px;border-left:4px solid #e8a020;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">'
-      +'<div><strong>'+c.nombre+'</strong>'+(c.cumpleanos?' <small style="color:#a07040;">'+c.cumpleanos+'</small>':'')+'</div>'
+      +'<div><strong>'+c.nombre+'</strong>'+(c.cumpleanos?' <small style="color:#727A76;">'+c.cumpleanos+'</small>':'')+'</div>'
       +waBtn+'</div>';
   }).join('');
   document.getElementById('alerta-cumple-lista').innerHTML=lista;
@@ -859,7 +1113,7 @@ function buscarClienteSugerencia(q) {
   var found=db.clientes.filter(function(c){return c.nombre.toLowerCase().indexOf(q.toLowerCase())>=0;}).slice(0,5);
   if(!found.length) return;
   var div=document.createElement('div');
-  div.style.cssText='position:absolute;background:#fff;border:1px solid #d4b896;border-radius:7px;z-index:200;width:100%;box-shadow:0 4px 12px rgba(0,0,0,.1);';
+  div.style.cssText='position:absolute;background:#fff;border:1px solid #BFCBC5;border-radius:7px;z-index:200;width:100%;box-shadow:0 4px 12px rgba(0,0,0,.1);';
   found.forEach(function(c){
     var item=document.createElement('div');
     item.style.cssText='padding:8px 12px;cursor:pointer;font-size:.9rem;';
@@ -1150,12 +1404,12 @@ function renderResumenHoy() {
 function renderUltimas() {
   var ul=document.getElementById('ultimas-lista');
   var last=db.recibos.slice().sort(function(a,b){return b.ts-a.ts;}).slice(0,5);
-  if(!last.length){ul.innerHTML='<p style="color:#a07040;">Sin registros a\u00FAn.</p>';return;}
+  if(!last.length){ul.innerHTML='<p style="color:#727A76;">Sin registros a\u00FAn.</p>';return;}
   ul.innerHTML=last.map(function(r){
     var col=r.tipo==='Venta'?'#2d7a3a':'#c0392b';
     var credTag=r.pago==='credito'?' <span style="background:#fff3cd;color:#856404;padding:1px 6px;border-radius:10px;font-size:.75rem;">CR\u00C9DITO</span>':'';
-    return '<div style="padding:6px 0;border-bottom:1px solid #e8d5ae;display:flex;justify-content:space-between;align-items:center;">'
-      +'<span><strong>'+r.descripcion+'</strong>'+credTag+'<br><small style="color:#a07040;">'+r.fecha+' &middot; '+r.tipo+'</small></span>'
+    return '<div style="padding:6px 0;border-bottom:1px solid #D9E1DD;display:flex;justify-content:space-between;align-items:center;">'
+      +'<span><strong>'+r.descripcion+'</strong>'+credTag+'<br><small style="color:#727A76;">'+r.fecha+' &middot; '+r.tipo+'</small></span>'
       +'<span style="font-weight:700;color:'+col+';">$'+fmt(r.total)+'</span></div>';
   }).join('');
 }
@@ -1173,7 +1427,7 @@ function renderHistorial() {
     return b.fecha.localeCompare(a.fecha);
   });
   var body=document.getElementById('historial-body');
-  if(!filtered.length){body.innerHTML='<tr><td colspan="11" style="text-align:center;color:#a07040;padding:20px;">Sin registros</td></tr>';return;}
+  if(!filtered.length){body.innerHTML='<tr><td colspan="11" style="text-align:center;color:#727A76;padding:20px;">Sin registros</td></tr>';return;}
   var isAdmin=db.currentUser&&db.currentUser.rol==='admin';
   body.innerHTML=filtered.map(function(r){
     var badge=r.tipo==='Venta'?'badge-venta':(r.tipo==='Gasto'?'badge-gasto':'badge-pago');
@@ -1205,14 +1459,14 @@ function renderDeudores() {
   var pendientes=db.deudores.filter(function(d){return d.estado==='pendiente';});
   pendientes.sort(function(a,b){return a.fechaCobro.localeCompare(b.fechaCobro);});
   if(!pendientes.length){
-    lista.innerHTML='<div style="text-align:center;padding:40px;color:#a07040;">\uD83C\uDF89 No hay deudas pendientes</div>';
+    lista.innerHTML='<div style="text-align:center;padding:40px;color:#727A76;">\uD83C\uDF89 No hay deudas pendientes</div>';
     return;
   }
   var hoy=fechaHoy();
   var manana=new Date(); manana.setDate(manana.getDate()+1);
   var mananaStr=manana.toISOString().split('T')[0];
   var total=pendientes.reduce(function(a,d){return a+d.valor;},0);
-  var html='<div style="margin-bottom:14px;padding:12px;background:#fff3cd;border-radius:8px;border-left:4px solid #824913;">'
+  var html='<div style="margin-bottom:14px;padding:12px;background:#fff3cd;border-radius:8px;border-left:4px solid #079C58;">'
     +'<strong>Total por cobrar: $'+fmt(total)+'</strong> &mdash; '+pendientes.length+' deuda(s) pendiente(s)</div>';
   pendientes.forEach(function(d){
     var isManana=d.fechaCobro===mananaStr;
@@ -1226,7 +1480,7 @@ function renderDeudores() {
       +(isAdmin()&&d.tel?'<button class="btn btn-wa btn-sm" onclick="waCobroDirecto(\''+d.id+'\')">&#x1F4AC; WA</button>':'')
       +'<button class="btn btn-success btn-sm" onclick="pagarDeuda(\''+d.id+'\')">&#x2713; Pagar</button>'
       +'</div></div>'
-      +'<div style="font-size:.85rem;color:#6b4226;">'
+      +'<div style="font-size:.85rem;color:#343A37;">'
       +'Valor: <strong>$'+fmt(d.valor)+'</strong> &nbsp;&mdash;&nbsp; Cobro: <strong>'+d.fechaCobro+'</strong>'
       +(d.tel?'&nbsp;&mdash;&nbsp; &#x1F4DE; '+d.tel:'')
       +'</div></div>';
@@ -1288,11 +1542,11 @@ function renderGraficas() {
     }
   });
   var prodSort=Object.entries(prodTotals).sort(function(a,b){return b[1]-a[1];}).slice(0,6);
-  renderChart('chart-prod','doughnut',{labels:prodSort.map(function(x){return x[0];}),datasets:[{data:prodSort.map(function(x){return x[1];}),backgroundColor:['#824913','#a05c20','#c4813a','#d4a55a','#e8c87a','#f5e2ae']}]});
+  renderChart('chart-prod','doughnut',{labels:prodSort.map(function(x){return x[0];}),datasets:[{data:prodSort.map(function(x){return x[1];}),backgroundColor:['#079C58','#057A45','#c4813a','#d4a55a','#e8c87a','#f5e2ae']}]});
   var dias=[];
   for(var i=13;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);dias.push(d.toISOString().split('T')[0]);}
   var diaVentas=dias.map(function(d){return db.recibos.filter(function(r){return r.fecha===d&&r.tipo==='Venta';}).reduce(function(a,r){return a+r.total;},0);});
-  renderChart('chart-dia','line',{labels:dias.map(function(d){return d.substr(5);}),datasets:[{label:'Ventas',data:diaVentas,borderColor:'#824913',backgroundColor:'rgba(130,73,19,.1)',fill:true,tension:.4}]});
+  renderChart('chart-dia','line',{labels:dias.map(function(d){return d.substr(5);}),datasets:[{label:'Ventas',data:diaVentas,borderColor:'#079C58',backgroundColor:'rgba(130,73,19,.1)',fill:true,tension:.4}]});
   var tv=0,tg=0,tp=0;
   db.recibos.forEach(function(r){if(r.tipo==='Venta')tv+=r.total;else if(r.tipo==='Gasto')tg+=r.total;else tp+=r.total;});
   renderChart('chart-tipo','pie',{labels:['Ventas','Gastos','Pagos'],datasets:[{data:[tv,tg,tp],backgroundColor:['#2d7a3a','#c0392b','#5a7a9a']}]});
@@ -1356,15 +1610,15 @@ function renderCRM() {
       ?(filtered.length+' de '+total+' cliente'+(total!==1?'s':''))
       :(total+' cliente'+(total!==1?'s':''));
   }
-  if(!filtered.length){lista.innerHTML='<p style="color:#a07040;">Sin clientes registrados.</p>';return;}
+  if(!filtered.length){lista.innerHTML='<p style="color:#727A76;">Sin clientes registrados.</p>';return;}
   var umbral=db.config.ptosUmbral||100;
   var html='';
   filtered.forEach(function(c){
     var pts=getPuntos(c.nombre);
     var ptsBar=Math.min(100,Math.round(pts/umbral*100));
     var ptsBono=isAdmin()&&pts>=umbral?'<button class="btn btn-primary btn-sm" onclick="enviarMsgPuntosId(\''+c.id+'\')">&#x1F381; Bono WA</button>':'';
-    var notaInline=c.notas?'<span style="font-weight:400;color:#a07040;font-size:.88rem;"> ('+c.notas+')</span>':'';
-    var cumpleRow=c.cumpleanos?'<div style="font-size:.82rem;color:#a07040;margin-bottom:4px;">&#x1F382; '+c.cumpleanos+'</div>':'';
+    var notaInline=c.notas?'<span style="font-weight:400;color:#727A76;font-size:.88rem;"> ('+c.notas+')</span>':'';
+    var cumpleRow=c.cumpleanos?'<div style="font-size:.82rem;color:#727A76;margin-bottom:4px;">&#x1F382; '+c.cumpleanos+'</div>':'';
     var auditRow='<div style="font-size:.72rem;color:#c0a080;margin-top:6px;">'
       +(c.creadoPor?'Creado por <strong>'+c.creadoPor+'</strong>'+(c.creadoEn?' el '+c.creadoEn:''):'')
       +(c.editadoPor&&c.editadoPor!==c.creadoPor?' &middot; Editado por <strong>'+c.editadoPor+'</strong>'+(c.editadoEn?' el '+c.editadoEn:''):'')
@@ -1378,17 +1632,17 @@ function renderCRM() {
       +'<button class="btn btn-secondary btn-sm" onclick="editarCliente(\''+c.id+'\')">&#x270F;&#xFE0F;</button>'
       +(isAdmin()?'<button class="btn btn-danger btn-sm" onclick="eliminarCliente(\''+c.id+'\')">&#x1F5D1;&#xFE0F;</button>':'')
       +'</div></div>'
-      +'<div style="font-size:.85rem;color:#6b4226;margin-bottom:6px;">'
+      +'<div style="font-size:.85rem;color:#343A37;margin-bottom:6px;">'
       +(c.tel?'&#x1F4DE; '+c.tel+'&nbsp;&nbsp;':'')+(c.email?'&#x2709;&#xFE0F; '+c.email+'&nbsp;&nbsp;':'')+(c.ciudad?'&#x1F4CD; '+c.ciudad:'')
       +'</div>'
       +cumpleRow
       +'<div style="display:flex;align-items:center;gap:10px;">'
       +'<div style="flex:1;background:#f0e0c8;border-radius:20px;height:8px;overflow:hidden;">'
-      +'<div style="width:'+ptsBar+'%;background:#824913;height:100%;border-radius:20px;transition:width .3s;"></div></div>'
-      +'<span style="font-size:.82rem;color:#824913;font-weight:700;white-space:nowrap;">\uD83C\uDF6B '+pts+' / '+umbral+' pts</span>'
+      +'<div style="width:'+ptsBar+'%;background:#079C58;height:100%;border-radius:20px;transition:width .3s;"></div></div>'
+      +'<span style="font-size:.82rem;color:#079C58;font-weight:700;white-space:nowrap;">\uD83C\uDF6B '+pts+' / '+umbral+' pts</span>'
       +ptsBono+'</div>'
       +auditRow
-      +'<div style="font-size:.7rem;color:#d4b896;margin-top:4px;">ID: '+c.id+'</div>'
+      +'<div style="font-size:.7rem;color:#BFCBC5;margin-top:4px;">ID: '+c.id+'</div>'
       +'</div>';
   });
   lista.innerHTML=html;
@@ -1510,6 +1764,7 @@ function calcEjecutivo() {
 
 /* ===================== ADMIN ===================== */
 function initAdmin() {
+  cargarAparienciaAdmin();
   document.getElementById('cfg-gasurl').value=db.config.gasUrl||'';
   document.getElementById('cfg-waprefijo').value=db.config.waPrefijo||'57';
   document.getElementById('cfg-wamsg').value=db.config.waMsgTemplate||'';
@@ -1575,7 +1830,7 @@ function renderUsuariosAdmin() {
   db.config.usuarios.forEach(function(u){
     html+='<div class="user-list-item">'
       +'<div class="user-info"><div class="user-avatar">'+u.nombre.charAt(0).toUpperCase()+'</div>'
-      +'<div><strong>'+u.nombre+'</strong> <small style="color:#a07040;">@'+u.username+'</small><br>'
+      +'<div><strong>'+u.nombre+'</strong> <small style="color:#727A76;">@'+u.username+'</small><br>'
       +'<span class="badge '+(u.rol==='admin'?'badge-admin':'badge-vendedor')+'">'+u.rol+'</span></div></div>'
       +'<div style="display:flex;gap:6px;">'
       +'<button class="btn btn-secondary btn-sm" onclick="abrirModalUsuario(\''+u.id+'\')">&#x270F;&#xFE0F;</button>'
@@ -1637,7 +1892,7 @@ function eliminarUsuario(id) {
 function renderCatalogo() {
   var lista=document.getElementById('catalogo-lista');
   if(!lista) return;
-  if(!db.productos.length){lista.innerHTML='<p style="color:#a07040;">Sin productos a\u00fan.</p>';return;}
+  if(!db.productos.length){lista.innerHTML='<p style="color:#727A76;">Sin productos a\u00fan.</p>';return;}
   var html='';
   db.productos.forEach(function(p){
     html+='<div class="prod-item"><div class="prod-info"><div class="prod-name">'+p.nombre+'</div>'
@@ -1710,7 +1965,7 @@ function renderPromocionesAdmin() {
   var lista=document.getElementById('promociones-lista');
   if(!lista) return;
   if(!db.promociones.length){
-    lista.innerHTML='<div style="padding:14px;background:#fff9f0;border-radius:8px;color:#a07040;font-size:.88rem;">A\u00fan no hay promociones configuradas.</div>';
+    lista.innerHTML='<div style="padding:14px;background:#fff9f0;border-radius:8px;color:#727A76;font-size:.88rem;">A\u00fan no hay promociones configuradas.</div>';
     return;
   }
   var html='';
@@ -1721,9 +1976,9 @@ function renderPromocionesAdmin() {
       +'<span class="badge '+(activa?'badge-admin':'badge-vendedor')+'">'+(activa?'Activa':'Inactiva')+'</span></div>'
       +'<div class="client-actions"><button class="btn btn-secondary btn-sm" onclick="abrirModalPromocion(\''+p.id+'\')">&#x270F;&#xFE0F;</button>'
       +'<button class="btn btn-danger btn-sm" onclick="eliminarPromocion(\''+p.id+'\')">&#x1F5D1;&#xFE0F;</button></div></div>'
-      +'<div style="font-size:.86rem;color:#6b4226;margin-top:8px;">Por cada <strong>'+p.cantidadGatillo+'</strong> × '+promoNombreProducto(p.productoGatilloId)
+      +'<div style="font-size:.86rem;color:#343A37;margin-top:8px;">Por cada <strong>'+p.cantidadGatillo+'</strong> × '+promoNombreProducto(p.productoGatilloId)
       +' &rarr; <strong>'+p.cantidadRegalo+'</strong> × '+promoNombreProducto(p.productoRegaloId)+' &#x1F381;</div>'
-      +'<div style="font-size:.8rem;color:#a07040;margin-top:4px;">Vigencia: '+(p.fechaInicio||'Sin inicio')+' a '+(p.fechaFin||'Sin fin')+'</div></div>';
+      +'<div style="font-size:.8rem;color:#727A76;margin-top:4px;">Vigencia: '+(p.fechaInicio||'Sin inicio')+' a '+(p.fechaFin||'Sin fin')+'</div></div>';
   });
   lista.innerHTML=html;
 }
@@ -1796,8 +2051,8 @@ function renderGastosFijosAdmin() {
   var html='';
   gf.forEach(function(g,i){
     html+='<div style="display:flex;gap:8px;margin-bottom:8px;">'
-      +'<input type="text" placeholder="Concepto" value="'+(g.concepto||'')+'" oninput="updateGF('+anio+','+i+',\'concepto\',this.value)" style="flex:2;padding:8px;border:1px solid #d4b896;border-radius:6px;background:#fdf4e3;">'
-      +'<input type="number" placeholder="Valor $" value="'+(g.valor||'')+'" oninput="updateGF('+anio+','+i+',\'valor\',this.value)" style="flex:1;padding:8px;border:1px solid #d4b896;border-radius:6px;background:#fdf4e3;">'
+      +'<input type="text" placeholder="Concepto" value="'+(g.concepto||'')+'" oninput="updateGF('+anio+','+i+',\'concepto\',this.value)" style="flex:2;padding:8px;border:1px solid #BFCBC5;border-radius:6px;background:#F7F9F8;">'
+      +'<input type="number" placeholder="Valor $" value="'+(g.valor||'')+'" oninput="updateGF('+anio+','+i+',\'valor\',this.value)" style="flex:1;padding:8px;border:1px solid #BFCBC5;border-radius:6px;background:#F7F9F8;">'
       +'<button class="btn btn-danger btn-sm" onclick="removeGF('+anio+','+i+')">&times;</button></div>';
   });
   document.getElementById('gf-lista').innerHTML=html;
@@ -1872,10 +2127,10 @@ function renderPostventa() {
   });
   pendientes.sort(function(a, b) { return b.ultimaCompra.localeCompare(a.ultimaCompra); });
   if (!pendientes.length) {
-    lista.innerHTML = '<div style="text-align:center;padding:40px;color:#a07040;">\uD83C\uDF89 \u00A1Todos los clientes han sido contactados!</div>';
+    lista.innerHTML = '<div style="text-align:center;padding:40px;color:#727A76;">\uD83C\uDF89 \u00A1Todos los clientes han sido contactados!</div>';
     return;
   }
-  var html = '<p style="font-size:.85rem;color:#a07040;margin-bottom:12px;">' + pendientes.length + ' cliente(s) pendiente(s)</p>';
+  var html = '<p style="font-size:.85rem;color:#727A76;margin-bottom:12px;">' + pendientes.length + ' cliente(s) pendiente(s)</p>';
   pendientes.forEach(function(c) {
     var tpl = db.config.waMsgPostventa || 'Hola {nombre}, \u00BFc\u00f3mo te parecieron los Alfajores?';
     var preview = tpl.replace(/\{nombre\}/g, c.nombre);
@@ -1885,13 +2140,13 @@ function renderPostventa() {
     if (isAdmin() && c.tel) {
       html += '<button class="btn btn-wa btn-sm" onclick="enviarPostventa(this)" data-nombre="' + c.nombre.replace(/"/g, '&quot;') + '" data-tel="' + c.tel + '">&#x1F4AC; Enviar WA</button>';
     } else if (!c.tel) {
-      html += '<span style="font-size:.8rem;color:#a07040;">Sin tel\u00e9fono</span>';
+      html += '<span style="font-size:.8rem;color:#727A76;">Sin tel\u00e9fono</span>';
     }
     html += '<button class="btn btn-secondary btn-sm" onclick="marcarPVEnviado(this)" data-nombre="' + c.nombre.replace(/"/g, '&quot;') + '">\u2713 Ya enviado</button>'
       + '</div></div>'
-      + '<div style="font-size:.83rem;color:#6b4226;">\u00DAltima compra: <strong>' + c.ultimaCompra + '</strong>'
+      + '<div style="font-size:.83rem;color:#343A37;">\u00DAltima compra: <strong>' + c.ultimaCompra + '</strong>'
       + (c.tel ? '&nbsp;&nbsp;&#x1F4DE; ' + c.tel : '') + '</div>'
-      + '<div style="font-size:.82rem;color:#a07040;margin-top:6px;font-style:italic;">&ldquo;' + preview + '&rdquo;</div>'
+      + '<div style="font-size:.82rem;color:#727A76;margin-top:6px;font-style:italic;">&ldquo;' + preview + '&rdquo;</div>'
       + '</div>';
   });
   lista.innerHTML = html;
@@ -1980,7 +2235,7 @@ function verificarCobrosNotif() {
   localStorage.setItem('aca_lastNotifCheck', hoy);
   var pendientes = db.deudores.filter(function(d){ return d.estado==='pendiente'&&d.fechaCobro===mananaStr; });
   pendientes.forEach(function(d){
-    new Notification('\u23F0 Cobro ma\u00f1ana \u2014 Alfajores con Amor', {
+    new Notification('\u23F0 Cobro ma\u00f1ana \u2014 '+(db.config.notificationTitle||db.config.businessName||'FinControl'), {
       body: d.clienteNombre + ' \u2014 $' + fmt(d.valor),
       icon: './icon-192.png', tag: 'cobro-'+d.id
     });
@@ -2246,6 +2501,7 @@ function agregarReferidoId(clienteId) {
 
 /* ===================== BOOT ===================== */
 loadDB();
+aplicarApariencia();
 // Fuente de verdad unica: la URL del HTML siempre tiene prioridad sobre localStorage
 db.config.gasUrl='https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec';
 // Restaurar sesion si existe
