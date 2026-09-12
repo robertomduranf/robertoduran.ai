@@ -362,7 +362,7 @@ var db = {
   deudores: [],
   puntos: {},
   config: {
-    gasUrl: 'https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec', // sobreescrita en el boot — editar solo ahi
+    gasUrl: 'https://script.google.com/macros/s/AKfycbzqBre0_Q891jBY95tuxoKavGgrAhq8jUXKyHEH7TTyEhL10z3W7Ho8Gc7F3igcVts/exec', // sobreescrita en el boot — editar solo ahi
     waPrefijo: '57',
     waMsgTemplate: 'Hola {nombre}, gracias por tu compra. \u00A1Fue un placer atenderte!',
     waMsgCobro: 'Hola {nombre}, te recordamos que ma\u00F1ana {fecha} acordamos el pago de tu pedido de los deliciosos Alfajores por un valor de ${valor}. \u00BFDeseas pagar por transferencia o prefieres que pasemos a recogerte el efectivo? \uD83E\uDDC1',
@@ -2503,7 +2503,7 @@ function agregarReferidoId(clienteId) {
 loadDB();
 aplicarApariencia();
 // Fuente de verdad unica: la URL del HTML siempre tiene prioridad sobre localStorage
-db.config.gasUrl='https://script.google.com/macros/s/AKfycbz_Qs3Qw_6yGQZJSZf1qz3zSCxgajmf8sphy9q8wgfZhTOgI6h0A8teGytk67KN8jR2dg/exec';
+db.config.gasUrl='https://script.google.com/macros/s/AKfycbzqBre0_Q891jBY95tuxoKavGgrAhq8jUXKyHEH7TTyEhL10z3W7Ho8Gc7F3igcVts/exec';
 // Restaurar sesion si existe
 (function() {
   try {
