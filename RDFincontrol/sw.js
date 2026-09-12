@@ -3,7 +3,7 @@
 //  Maneja caché offline + notificaciones de cobro
 // ============================================================
 
-var CACHE_NAME = 'aca-V.a 1.1';
+var CACHE_NAME = 'fincontrol-v1.3.16-brand';
 var ASSETS = [
   './',
   './AlfajoresConAmor_Control.html',
@@ -75,7 +75,7 @@ self.addEventListener('push', function(e) {
   var data = {};
   try { data = e.data.json(); } catch(err) {}
   
-  var title = data.title || 'Alfajores con Amor';
+  var title = data.title || 'FinControl';
   var options = {
     body: data.body || 'Tienes cobros pendientes para hoy.',
     icon: './icon-192.png',
