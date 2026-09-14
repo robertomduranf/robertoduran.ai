@@ -396,6 +396,16 @@ tr:hover td{background:rgba(130,73,19,.04);}
         <button class="btn btn-primary" onclick="calcBalance()" style="margin-bottom:16px;">Calcular</button>
         <div id="balance-resultado"></div>
       </div>
+
+      <div class="card">
+        <h3>&#x1F4CA; Cierre de Caja Diario</h3>
+        <div class="form-group" style="max-width:220px;"><label>Fecha</label><input type="date" id="caja-fecha"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+          <button class="btn btn-primary" onclick="generarCierreCaja()">Generar cierre</button>
+          <button class="btn btn-wa" onclick="compartirCierreWhatsApp()">&#x1F4AC; Compartir por WhatsApp</button>
+        </div>
+        <div id="caja-resultado"></div>
+      </div>
     </div>
 
     <div class="tab-pane" id="tab-agregar-cliente">
@@ -1044,6 +1054,7 @@ function initApp(){
   renderProductosSelect();renderResumenHoy();renderUltimas();
   setDefaultDates('h-desde','h-hasta');setDefaultDates('pyg-desde','pyg-hasta');
   document.getElementById('bal-anio').value=new Date().getFullYear();
+  document.getElementById('caja-fecha').value=today;
   document.getElementById('ej-anio').value=new Date().getFullYear();
   document.getElementById('gf-anio').value=new Date().getFullYear();
   onTipoChange();onPagoChange();
@@ -1604,10 +1615,69 @@ function calcPyG(){
 
 function calcBalance(){
   var anio=parseInt(document.getElementById('bal-anio').value)||new Date().getFullYear(),rec=db.recibos.filter(function(r){return r.fecha.startsWith(String(anio));});
-  var ventas=rec.filter(function(r){return r.tipo==='Venta';}).reduce(function(a,r){return a+r.total;},0);
+  var ventasContado=rec.filter(function(r){return r.tipo==='Venta'&&String(r.pago||'contado').toLowerCase()!=='credito';}).reduce(function(a,r){return a+r.total;},0);
+  var cobrosCartera=rec.filter(function(r){return r.tipo==='Pago Deuda';}).reduce(function(a,r){return a+r.total;},0);
+  var ventasCredito=rec.filter(function(r){return r.tipo==='Venta'&&String(r.pago||'contado').toLowerCase()==='credito';}).reduce(function(a,r){return a+r.total;},0);
   var gastos=rec.filter(function(r){return r.tipo==='Gasto';}).reduce(function(a,r){return a+r.total;},0);
-  var gf=(db.gastosFijos[anio]||[]).reduce(function(a,g){return a+(parseFloat(g.valor)||0);},0),u=ventas-gastos-gf;
-  document.getElementById('balance-resultado').innerHTML='<div class="grid-3"><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(ventas)+'</div><div class="kpi-lbl">Ingresos '+anio+'</div></div><div class="kpi"><div class="kpi-val" style="color:#c0392b;">$'+fmt(gastos+gf)+'</div><div class="kpi-lbl">Egresos '+anio+'</div></div><div class="kpi"><div class="kpi-val">$'+fmt(Math.abs(u))+'</div><div class="kpi-lbl">'+(u>=0?'Utilidad':'Pérdida')+'</div></div></div>';
+  var gf=(db.gastosFijos[anio]||[]).reduce(function(a,g){return a+(parseFloat(g.valor)||0);},0);
+  var ingresosCaja=ventasContado+cobrosCartera,egresos=gastos+gf,cajaNeta=ingresosCaja-egresos;
+  document.getElementById('balance-resultado').innerHTML='<div class="grid-3"><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(ventasContado)+'</div><div class="kpi-lbl">Ventas contado '+anio+'</div></div><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(cobrosCartera)+'</div><div class="kpi-lbl">Cobros de cartera '+anio+'</div></div><div class="kpi"><div class="kpi-val" style="color:#5a7a9a;">$'+fmt(ventasCredito)+'</div><div class="kpi-lbl">Ventas cr&eacute;dito (No Caja) '+anio+'</div></div><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(ingresosCaja)+'</div><div class="kpi-lbl">Ingresos de Caja '+anio+'</div></div><div class="kpi"><div class="kpi-val" style="color:#c0392b;">$'+fmt(egresos)+'</div><div class="kpi-lbl">Egresos '+anio+'</div></div><div class="kpi"><div class="kpi-val">$'+fmt(cajaNeta)+'</div><div class="kpi-lbl">Caja Neta</div></div></div>';
+}
+
+function calcularCierreCajaDiario(fecha){
+  var rec=db.recibos.filter(function(r){return r.fecha===fecha;});
+  var ventasContadoArr=rec.filter(function(r){return r.tipo==='Venta'&&String(r.pago||'contado').toLowerCase()!=='credito';});
+  var ventasCreditoArr=rec.filter(function(r){return r.tipo==='Venta'&&String(r.pago||'contado').toLowerCase()==='credito';});
+  var cobrosCarteraArr=rec.filter(function(r){return r.tipo==='Pago Deuda';});
+  var gastosArr=rec.filter(function(r){return r.tipo==='Gasto';});
+  var ventasContado=ventasContadoArr.reduce(function(a,r){return a+r.total;},0);
+  var ventasCredito=ventasCreditoArr.reduce(function(a,r){return a+r.total;},0);
+  var cobrosCartera=cobrosCarteraArr.reduce(function(a,r){return a+r.total;},0);
+  var gastos=gastosArr.reduce(function(a,r){return a+r.total;},0);
+  return{
+    fecha:fecha,
+    ventasContado:ventasContado,
+    ventasCredito:ventasCredito,
+    cobrosCartera:cobrosCartera,
+    gastos:gastos,
+    ingresosCaja:ventasContado+cobrosCartera,
+    cajaNeta:ventasContado+cobrosCartera-gastos,
+    ventaComercialTotal:ventasContado+ventasCredito,
+    cantidadVentasContado:ventasContadoArr.length,
+    cantidadVentasCredito:ventasCreditoArr.length,
+    cantidadPagosDeuda:cobrosCarteraArr.length,
+    cantidadGastos:gastosArr.length,
+    totalCantidadVentas:ventasContadoArr.length+ventasCreditoArr.length
+  };
+}
+
+function fechaCierreLegible(fecha){
+  var p=String(fecha||'').split('-');
+  return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:fecha;
+}
+
+function generarCierreCaja(){
+  var fecha=document.getElementById('caja-fecha').value||fechaHoy(),c=calcularCierreCajaDiario(fecha);
+  document.getElementById('caja-resultado').innerHTML='<div class="grid-3"><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(c.ventasContado)+'</div><div class="kpi-lbl">Ventas contado ('+c.cantidadVentasContado+')</div></div><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(c.cobrosCartera)+'</div><div class="kpi-lbl">Cobros de cartera ('+c.cantidadPagosDeuda+')</div></div><div class="kpi"><div class="kpi-val" style="color:#2d7a3a;">$'+fmt(c.ingresosCaja)+'</div><div class="kpi-lbl">Ingresos Caja</div></div><div class="kpi"><div class="kpi-val" style="color:#c0392b;">$'+fmt(c.gastos)+'</div><div class="kpi-lbl">Gastos ('+c.cantidadGastos+')</div></div><div class="kpi"><div class="kpi-val">$'+fmt(c.cajaNeta)+'</div><div class="kpi-lbl">Caja Neta</div></div><div class="kpi"><div class="kpi-val" style="color:#5a7a9a;">$'+fmt(c.ventasCredito)+'</div><div class="kpi-lbl">Ventas cr&eacute;dito ('+c.cantidadVentasCredito+') &mdash; No Caja</div></div></div><div style="margin-top:14px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:.9rem;color:var(--text2);"><strong>Venta comercial total ('+c.totalCantidadVentas+'):</strong> $'+fmt(c.ventaComercialTotal)+'</div>';
+  return c;
+}
+
+function compartirCierreWhatsApp(){
+  var c=generarCierreCaja();
+  var nombreNegocio=(db.config.businessName||db.config.appName||'FinControl').trim()||'FinControl';
+  var usuario=db.currentUser&&db.currentUser.nombre?db.currentUser.nombre:'—';
+  var msg='📊 CIERRE DE CAJA — '+nombreNegocio+'\n'
+    +'📅 '+fechaCierreLegible(c.fecha)+'\n\n'
+    +'💵 Ventas contado ('+c.cantidadVentasContado+'): $'+fmt(c.ventasContado)+'\n'
+    +'💳 Cobros de cartera ('+c.cantidadPagosDeuda+'): $'+fmt(c.cobrosCartera)+'\n'
+    +'📥 INGRESOS DE CAJA: $'+fmt(c.ingresosCaja)+'\n\n'
+    +'📤 Gastos ('+c.cantidadGastos+'): $'+fmt(c.gastos)+'\n\n'
+    +'✅ CAJA NETA: $'+fmt(c.cajaNeta)+'\n\n'
+    +'📌 INFORMACIÓN COMERCIAL\n'
+    +'Ventas crédito ('+c.cantidadVentasCredito+'): $'+fmt(c.ventasCredito)+'\n'
+    +'Venta total del día ('+c.totalCantidadVentas+'): $'+fmt(c.ventaComercialTotal)+'\n\n'
+    +'Cierre generado por: '+usuario;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function renderCRM(){
