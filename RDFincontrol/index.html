@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinControl</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <style>
 :root{--bg:#F4F6F5;--bg2:#E9EEEB;--card:#FFFFFF;--input:#F7F9F8;--border:#D9E1DD;--border2:#BFCBC5;--accent:#079C58;--accent2:#057A45;--text:#111111;--text2:#343A37;--text3:#727A76;--green:#2d7a3a;--red:#c0392b;--blue:#5a7a9a;--radius:10px;--shadow:0 2px 12px rgba(130,73,19,.13);}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -141,7 +141,7 @@ tr:hover td{background:rgba(130,73,19,.04);}
 
 <div id="login-screen">
   <div class="login-card">
-    <img class="login-logo" id="brand-logo-login" src="./logo.png" alt="Logo del negocio">
+    <img class="login-logo" id="brand-logo-login" src="./logo-header2.png" alt="Logo del negocio">
     <h2 id="brand-login-title">Sistema de Control</h2>
     <p id="brand-login-subtitle">Inicia sesi&oacute;n para continuar</p>
     <label for="li-user">Usuario</label>
@@ -149,12 +149,16 @@ tr:hover td{background:rgba(130,73,19,.04);}
     <label for="li-pass">Contrase&ntilde;a</label>
     <input type="password" id="li-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password">
     <button class="btn-login" onclick="doLogin()">Ingresar</button>
+    <button id="btn-instalar-login" type="button" onclick="instalarPWA()"
+      style="width:100%;margin-top:10px;padding:11px 14px;border:1.5px solid var(--accent);border-radius:9px;background:#fff;color:var(--accent);font-size:.92rem;font-weight:700;cursor:pointer;">
+      📲 Instalar App
+    </button>
     <div id="login-error">Usuario o contrase&ntilde;a incorrectos</div>
   </div>
 </div>
 
 <div id="loading-screen" style="display:none;position:fixed;inset:0;background:#F4F6F5;z-index:2000;flex-direction:column;align-items:center;justify-content:center;">
-  <img id="brand-logo-loading" src="./logo.png" style="width:120px;margin-bottom:20px;opacity:.9;" alt="Logo">
+  <img id="brand-logo-loading" src="./logo-header2.png" style="width:120px;margin-bottom:20px;opacity:.9;" alt="Logo">
   <div style="color:#079C58;font-size:1rem;font-weight:600;margin-bottom:16px;">Cargando datos...</div>
   <div style="width:48px;height:48px;border:4px solid #D9E1DD;border-top-color:#079C58;border-radius:50%;animation:spin 1s linear infinite;"></div>
   <style>@keyframes spin{to{transform:rotate(360deg);}}</style>
@@ -163,10 +167,11 @@ tr:hover td{background:rgba(130,73,19,.04);}
 <div id="app">
   <header>
     <div class="logo-wrap">
-      <img id="brand-logo-header" src="./logo-header.png" alt="Logo">
+      <img id="brand-logo-header" src="./logo-header2.png" alt="Logo">
       <h1 id="header-ciudad">Medell&iacute;n</h1>
     </div>
     <div class="header-right">
+      <span id="sync-status" style="display:none;font-size:.74rem;background:rgba(255,255,255,.18);padding:4px 9px;border-radius:16px;white-space:nowrap;">Sincronizando…</span>
       <span class="user-badge" id="user-badge">&mdash;</span>
       <button class="btn-logout" onclick="actualizarDatos()" title="Actualizar">&#x1F504;</button>
       <button id="btn-instalar" class="btn-logout" style="display:none;background:rgba(255,255,255,.35);" onclick="instalarPWA()">&#x1F4F2; Instalar App</button>
@@ -293,7 +298,7 @@ tr:hover td{background:rgba(130,73,19,.04);}
               <input type="file" id="cfg-logo-main-file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="previewLogoArchivo(this,'main')">
               <small>Se redimensiona autom&aacute;ticamente para guardarlo en la configuraci&oacute;n.</small>
               <div style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);text-align:center;">
-                <img id="cfg-logo-main-preview" src="./logo.png" alt="Vista previa logo principal" style="max-width:180px;max-height:90px;object-fit:contain;">
+                <img id="cfg-logo-main-preview" src="./logo-header2.png" alt="Vista previa logo principal" style="max-width:180px;max-height:90px;object-fit:contain;">
               </div>
             </div>
             <div class="form-group">
@@ -301,7 +306,7 @@ tr:hover td{background:rgba(130,73,19,.04);}
               <input type="file" id="cfg-logo-header-file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="previewLogoArchivo(this,'header')">
               <small>Se recomienda una versi&oacute;n horizontal o compacta.</small>
               <div style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);text-align:center;">
-                <img id="cfg-logo-header-preview" src="./logo-header.png" alt="Vista previa logo cabecera" style="max-width:180px;max-height:90px;object-fit:contain;">
+                <img id="cfg-logo-header-preview" src="./logo-header2.png" alt="Vista previa logo cabecera" style="max-width:180px;max-height:90px;object-fit:contain;">
               </div>
             </div>
           </div>
@@ -476,8 +481,8 @@ function aplicarApariencia() {
   root.style.setProperty('--card', valorColorSeguro(c.themeCard, BRAND_DEFAULTS.themeCard));
   root.style.setProperty('--text', valorColorSeguro(c.themeText, BRAND_DEFAULTS.themeText));
 
-  var logoMain=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo.png';
-  var logoHeader=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header.png';
+  var logoMain=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo-header2.png';
+  var logoHeader=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header2.png';
 
   var businessName=String(c.businessName||BRAND_DEFAULTS.businessName).trim();
   var appName=String(c.appName||BRAND_DEFAULTS.appName).trim();
@@ -536,8 +541,8 @@ function cargarAparienciaAdmin() {
 
   var pm=document.getElementById('cfg-logo-main-preview');
   var ph=document.getElementById('cfg-logo-header-preview');
-  if(pm) pm.src=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo.png';
-  if(ph) ph.src=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header.png';
+  if(pm) pm.src=(c.logoMain&&String(c.logoMain).trim())?c.logoMain:'./logo-header2.png';
+  if(ph) ph.src=(c.logoHeader&&String(c.logoHeader).trim())?c.logoHeader:'./logo-header2.png';
 }
 
 function comprimirLogo(file, cb) {
@@ -636,6 +641,31 @@ function restaurarApariencia() {
   });
 }
 
+function mostrarEstadoSync(texto, estado) {
+  var el=document.getElementById('sync-status');
+  if(!el) return;
+
+  if(!texto){
+    el.style.display='none';
+    el.textContent='';
+    return;
+  }
+
+  el.textContent=texto;
+  el.style.display='';
+  el.style.opacity=(estado==='error')?'1':'.94';
+}
+
+function refrescarUITrasSync() {
+  // El branding recibido desde Sheets se aplica sin recargar la página.
+  aplicarApariencia();
+  renderProductosSelect();
+  renderResumenHoy();
+  renderUltimas();
+  renderDeudores();
+  renderCRM();
+}
+
 /* ===================== AUTH ===================== */
 function doLogin() {
   var u = document.getElementById('li-user').value.trim();
@@ -692,24 +722,37 @@ function loginAs(user) {
   user=Object.assign({},user,{rol:normalizarRol(user&&user.rol)});
   db.currentUser=user;
   localStorage.setItem('fincontrol_session', JSON.stringify(user));
-  // Rescatar recibos LOCAL pendientes ANTES de limpiar
-  var _localPendientes=db.recibos.filter(function(r){return r.recibo&&String(r.recibo).indexOf('LOCAL')===0;});
-  localStorage.removeItem('fincontrol_recibos'); localStorage.removeItem('fincontrol_clientes');
-  localStorage.removeItem('fincontrol_productos'); localStorage.removeItem('fincontrol_promociones'); localStorage.removeItem('fincontrol_deudores');
-  localStorage.removeItem('fincontrol_puntos'); localStorage.removeItem('fincontrol_gastosFijos');
-  db.recibos=[]; db.clientes=[]; db.productos=[]; db.promociones=[];
-  db.deudores=[]; db.puntos={}; db.gastosFijos={};
+
+  // Conservar registros LOCAL todavía no confirmados por Sheets.
+  var _localPendientes=db.recibos.filter(function(r){
+    return r.recibo&&String(r.recibo).indexOf('LOCAL')===0;
+  });
+
+  // LOCAL-FIRST:
+  // Nunca destruimos una caché válida al iniciar sesión.
+  // La app aparece inmediatamente y Sheets sincroniza después.
   document.getElementById('login-screen').style.display='none';
-  document.getElementById('loading-screen').style.display='flex';
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('user-badge').textContent=user.nombre+' | '+user.rol;
+
+  applyRoleUI(user.rol);
+  initApp();
+  aplicarRutaPWA();
+  checkAlertasCobro();
+  checkAlertasCumple();
+
+  mostrarEstadoSync('Sincronizando…','sync');
+
   cargarDesdeSheets(function(ok) {
-    document.getElementById('loading-screen').style.display='none';
-    document.getElementById('app').style.display='flex';
-    document.getElementById('user-badge').textContent=user.nombre+' | '+user.rol;
-    applyRoleUI(user.rol);
-    initApp();
-    aplicarRutaPWA();
-    checkAlertasCobro();
-    checkAlertasCumple();
+    if(ok){
+      refrescarUITrasSync();
+      mostrarEstadoSync('Actualizado ✓','ok');
+      setTimeout(function(){ mostrarEstadoSync('','ok'); },1800);
+    } else {
+      mostrarEstadoSync('Modo local','error');
+      setTimeout(function(){ mostrarEstadoSync('','error'); },3500);
+    }
   }, _localPendientes);
 }
 
@@ -2224,9 +2267,17 @@ function esModoStandalone() {
 }
 
 function actualizarBotonInstalacion() {
-  var btn = document.getElementById('btn-instalar');
-  if (!btn) return;
-  btn.style.display = (!esModoStandalone() && deferredPrompt) ? '' : 'none';
+  var instalado = esModoStandalone();
+  var btnHeader = document.getElementById('btn-instalar');
+  var btnLogin = document.getElementById('btn-instalar-login');
+
+  // En login siempre ofrecemos una vía de instalación mientras no esté instalada.
+  if (btnLogin) btnLogin.style.display = instalado ? 'none' : '';
+
+  // En cabecera solo mostramos el botón cuando el navegador ofrece el prompt nativo.
+  if (btnHeader) {
+    btnHeader.style.display = (!instalado && deferredPrompt) ? '' : 'none';
+  }
 }
 
 if ('serviceWorker' in navigator) {
@@ -2281,10 +2332,11 @@ function instalarPWA() {
 
   if (!deferredPrompt) {
     var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
     if (esIOS) {
       alert('Para instalar FinControl en iPhone o iPad: toca Compartir → Añadir a pantalla de inicio.');
     } else {
-      alert('La instalación estará disponible cuando el navegador confirme que FinControl cumple los requisitos de PWA.');
+      alert('Si el navegador todavía no muestra la ventana automática, abre su menú y elige “Instalar FinControl” o “Instalar aplicación”.');
     }
     return;
   }
@@ -2633,6 +2685,7 @@ function migrarStorageFinControl() {
 migrarStorageFinControl();
 loadDB();
 aplicarApariencia();
+actualizarBotonInstalacion();
 // Restaurar sesion si existe
 (function() {
   try {
