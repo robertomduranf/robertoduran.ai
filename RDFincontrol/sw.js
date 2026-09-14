@@ -4,7 +4,7 @@
 // ============================================================
 
 var CACHE_PREFIX = 'fincontrol-';
-var CACHE_NAME = CACHE_PREFIX + 'app-v1.5.0';
+var CACHE_NAME = CACHE_PREFIX + 'app-v1.5.1';
 
 var APP_SHELL = [
   './',
