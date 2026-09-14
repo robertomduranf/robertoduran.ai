@@ -1,10 +1,10 @@
 // ============================================================
 // SERVICE WORKER — FinControl
-// Etapa 1: shell PWA, caché segura, actualización y modo offline.
+// Etapa 1 MAESTRA — shell PWA, caché segura y actualización.
 // ============================================================
 
 var CACHE_PREFIX = 'fincontrol-';
-var CACHE_NAME = CACHE_PREFIX + 'app-v1.4.1';
+var CACHE_NAME = CACHE_PREFIX + 'app-v1.5.0';
 
 var APP_SHELL = [
   './',
@@ -12,8 +12,7 @@ var APP_SHELL = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './logo.png',
-  './logo-header.png'
+  './logo-header2.png'
 ];
 
 function esServicioExterno_(url) {
@@ -38,13 +37,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        return Promise.all(
-          APP_SHELL.map(function(url) {
-            return cache.add(url).catch(function(err) {
-              console.warn('[FinControl SW] Recurso omitido del precache:', url, err);
-            });
-          })
-        );
+        return cache.addAll(APP_SHELL);
       })
       .then(function() {
         return self.skipWaiting();
@@ -79,14 +72,14 @@ self.addEventListener('fetch', function(event) {
 
   var url = request.url;
 
-  // Google Apps Script / APIs siempre van directo a red.
-  // Nunca se sirven respuestas financieras desde caché HTTP.
+  // Datos financieros / Google Apps Script: siempre red.
+  // Nunca devolver una respuesta API antigua desde Cache Storage.
   if (esServicioExterno_(url)) return;
 
-  // Dependencias CDN se dejan al navegador. No bloquean el shell PWA.
+  // Dependencias CDN no forman parte del shell offline.
   if (esRecursoExternoNoEsencial_(url)) return;
 
-  // Navegación: Network First. Si no hay red, se usa el shell instalado.
+  // HTML / navegación: Network First con shell como respaldo.
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
@@ -100,17 +93,15 @@ self.addEventListener('fetch', function(event) {
           return response;
         })
         .catch(function() {
-          return caches.match('./index.html')
-            .then(function(cached) {
-              return cached || caches.match('./');
-            });
+          return caches.match('./index.html').then(function(cached) {
+            return cached || caches.match('./');
+          });
         })
     );
     return;
   }
 
-  // Recursos propios: Stale While Revalidate.
-  // Responde rápido desde caché y refresca silenciosamente.
+  // Recursos propios: respuesta inmediata desde caché y actualización silenciosa.
   if (new URL(request.url).origin === self.location.origin) {
     event.respondWith(
       caches.open(CACHE_NAME).then(function(cache) {
@@ -145,11 +136,13 @@ self.addEventListener('message', function(event) {
 
 self.addEventListener('push', function(event) {
   var data = {};
+
   try {
     data = event.data ? event.data.json() : {};
   } catch (err) {}
 
   var title = data.title || 'FinControl';
+
   var options = {
     body: data.body || 'Tienes cobros pendientes para hoy.',
     icon: './icon-192.png',
@@ -168,6 +161,7 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
+
   if (event.action === 'cerrar') return;
 
   var url = (event.notification.data && event.notification.data.url) || './';
@@ -177,12 +171,14 @@ self.addEventListener('notificationclick', function(event) {
       .then(function(clientList) {
         for (var i = 0; i < clientList.length; i++) {
           var client = clientList[i];
+
           if (client.focus) {
             return client.focus().then(function() {
               if (client.navigate) return client.navigate(url);
             });
           }
         }
+
         return clients.openWindow(url);
       })
   );
