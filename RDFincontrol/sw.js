@@ -3,7 +3,7 @@
 // Caché PWA + actualizaciones + notificaciones
 // ============================================================
 
-var CACHE_NAME = 'fincontrol-v1.6.2';
+var CACHE_NAME = 'fincontrol-v1.6.21';
 
 var ASSETS = [
   './',
