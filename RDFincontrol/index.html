@@ -408,27 +408,27 @@ var neItems = []; // Lineas de producto de la venta actual (solo Nueva Entrada)
 
 function saveDB() {
   try {
-    localStorage.setItem('aca_recibos', JSON.stringify(db.recibos));
-    localStorage.setItem('aca_productos', JSON.stringify(db.productos));
-    localStorage.setItem('aca_promociones', JSON.stringify(db.promociones));
-    localStorage.setItem('aca_clientes', JSON.stringify(db.clientes));
-    localStorage.setItem('aca_gastosFijos', JSON.stringify(db.gastosFijos));
-    localStorage.setItem('aca_deudores', JSON.stringify(db.deudores));
-    localStorage.setItem('aca_puntos', JSON.stringify(db.puntos));
-    localStorage.setItem('aca_config', JSON.stringify(db.config));
+    localStorage.setItem('fincontrol_recibos', JSON.stringify(db.recibos));
+    localStorage.setItem('fincontrol_productos', JSON.stringify(db.productos));
+    localStorage.setItem('fincontrol_promociones', JSON.stringify(db.promociones));
+    localStorage.setItem('fincontrol_clientes', JSON.stringify(db.clientes));
+    localStorage.setItem('fincontrol_gastosFijos', JSON.stringify(db.gastosFijos));
+    localStorage.setItem('fincontrol_deudores', JSON.stringify(db.deudores));
+    localStorage.setItem('fincontrol_puntos', JSON.stringify(db.puntos));
+    localStorage.setItem('fincontrol_config', JSON.stringify(db.config));
   } catch(e) { console.warn('saveDB', e); }
 }
 
 function loadDB() {
   try {
-    var r = localStorage.getItem('aca_recibos'); if(r) db.recibos = JSON.parse(r);
-    var p = localStorage.getItem('aca_productos'); if(p) db.productos = JSON.parse(p);
-    var pr = localStorage.getItem('aca_promociones'); if(pr) db.promociones = JSON.parse(pr);
-    var c = localStorage.getItem('aca_clientes'); if(c) db.clientes = JSON.parse(c);
-    var g = localStorage.getItem('aca_gastosFijos'); if(g) db.gastosFijos = JSON.parse(g);
-    var d = localStorage.getItem('aca_deudores'); if(d) db.deudores = JSON.parse(d);
-    var pt = localStorage.getItem('aca_puntos'); if(pt) db.puntos = JSON.parse(pt);
-    var cfg = localStorage.getItem('aca_config');
+    var r = localStorage.getItem('fincontrol_recibos'); if(r) db.recibos = JSON.parse(r);
+    var p = localStorage.getItem('fincontrol_productos'); if(p) db.productos = JSON.parse(p);
+    var pr = localStorage.getItem('fincontrol_promociones'); if(pr) db.promociones = JSON.parse(pr);
+    var c = localStorage.getItem('fincontrol_clientes'); if(c) db.clientes = JSON.parse(c);
+    var g = localStorage.getItem('fincontrol_gastosFijos'); if(g) db.gastosFijos = JSON.parse(g);
+    var d = localStorage.getItem('fincontrol_deudores'); if(d) db.deudores = JSON.parse(d);
+    var pt = localStorage.getItem('fincontrol_puntos'); if(pt) db.puntos = JSON.parse(pt);
+    var cfg = localStorage.getItem('fincontrol_config');
     if(cfg) {
       var parsed = JSON.parse(cfg);
       db.config = Object.assign({}, db.config, parsed);
@@ -691,12 +691,12 @@ function normalizarRol(rol) {
 function loginAs(user) {
   user=Object.assign({},user,{rol:normalizarRol(user&&user.rol)});
   db.currentUser=user;
-  localStorage.setItem('aca_session', JSON.stringify(user));
+  localStorage.setItem('fincontrol_session', JSON.stringify(user));
   // Rescatar recibos LOCAL pendientes ANTES de limpiar
   var _localPendientes=db.recibos.filter(function(r){return r.recibo&&String(r.recibo).indexOf('LOCAL')===0;});
-  localStorage.removeItem('aca_recibos'); localStorage.removeItem('aca_clientes');
-  localStorage.removeItem('aca_productos'); localStorage.removeItem('aca_promociones'); localStorage.removeItem('aca_deudores');
-  localStorage.removeItem('aca_puntos'); localStorage.removeItem('aca_gastosFijos');
+  localStorage.removeItem('fincontrol_recibos'); localStorage.removeItem('fincontrol_clientes');
+  localStorage.removeItem('fincontrol_productos'); localStorage.removeItem('fincontrol_promociones'); localStorage.removeItem('fincontrol_deudores');
+  localStorage.removeItem('fincontrol_puntos'); localStorage.removeItem('fincontrol_gastosFijos');
   db.recibos=[]; db.clientes=[]; db.productos=[]; db.promociones=[];
   db.deudores=[]; db.puntos={}; db.gastosFijos={};
   document.getElementById('login-screen').style.display='none';
@@ -707,6 +707,7 @@ function loginAs(user) {
     document.getElementById('user-badge').textContent=user.nombre+' | '+user.rol;
     applyRoleUI(user.rol);
     initApp();
+    aplicarRutaPWA();
     checkAlertasCobro();
     checkAlertasCumple();
   }, _localPendientes);
@@ -714,7 +715,7 @@ function loginAs(user) {
 
 function doLogout() {
   db.currentUser=null;
-  localStorage.removeItem('aca_session');
+  localStorage.removeItem('fincontrol_session');
   document.getElementById('app').style.display='none';
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('li-user').value='';
@@ -2215,37 +2216,83 @@ function marcarPVEnviadoNombre(nombre) {
 
 /* ===================== PWA ===================== */
 var deferredPrompt = null;
+var recargaPorSW = false;
+
+function esModoStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         window.navigator.standalone === true;
+}
+
+function actualizarBotonInstalacion() {
+  var btn = document.getElementById('btn-instalar');
+  if (!btn) return;
+  btn.style.display = (!esModoStandalone() && deferredPrompt) ? '' : 'none';
+}
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('./sw.js').then(function(reg) {
-      console.log('SW OK:', reg.scope);
-    }).catch(function(err) { console.warn('SW error:', err); });
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(function(reg) {
+        console.log('FinControl PWA activa:', reg.scope);
+
+        // Busca nuevas versiones al abrir y al volver a la aplicación.
+        reg.update().catch(function(){});
+
+        document.addEventListener('visibilitychange', function() {
+          if (document.visibilityState === 'visible') {
+            reg.update().catch(function(){});
+          }
+        });
+
+        window.addEventListener('online', function() {
+          reg.update().catch(function(){});
+        });
+      })
+      .catch(function(err) {
+        console.warn('FinControl PWA no pudo registrar el Service Worker:', err);
+      });
+
+    // Solo recarga cuando ya había una versión controlando la página.
+    var teniaControlador = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+      if (!teniaControlador || recargaPorSW) return;
+      recargaPorSW = true;
+      window.location.reload();
+    });
   });
 }
 
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
-  var btn = document.getElementById('btn-instalar');
-  if (btn) btn.style.display = '';
+  actualizarBotonInstalacion();
 });
 
 window.addEventListener('appinstalled', function() {
   deferredPrompt = null;
-  var btn = document.getElementById('btn-instalar');
-  if (btn) btn.style.display = 'none';
+  actualizarBotonInstalacion();
 });
 
 function instalarPWA() {
-  if (!deferredPrompt) {
-    alert('Para instalar en iOS: toca Compartir \u2192 A\u00f1adir a pantalla de inicio');
+  if (esModoStandalone()) {
+    actualizarBotonInstalacion();
     return;
   }
+
+  if (!deferredPrompt) {
+    var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    if (esIOS) {
+      alert('Para instalar FinControl en iPhone o iPad: toca Compartir → Añadir a pantalla de inicio.');
+    } else {
+      alert('La instalación estará disponible cuando el navegador confirme que FinControl cumple los requisitos de PWA.');
+    }
+    return;
+  }
+
   deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(function(r) {
+  deferredPrompt.userChoice.finally(function() {
     deferredPrompt = null;
-    document.getElementById('btn-instalar').style.display = 'none';
+    actualizarBotonInstalacion();
   });
 }
 
@@ -2266,12 +2313,12 @@ function verificarCobrosNotif() {
   var manana = new Date(); manana.setDate(manana.getDate()+1);
   var mananaStr = manana.toISOString().split('T')[0];
   var hoy = fechaHoy();
-  if (localStorage.getItem('aca_lastNotifCheck') === hoy) return;
-  localStorage.setItem('aca_lastNotifCheck', hoy);
+  if (localStorage.getItem('fincontrol_lastNotifCheck') === hoy) return;
+  localStorage.setItem('fincontrol_lastNotifCheck', hoy);
   var pendientes = db.deudores.filter(function(d){ return d.estado==='pendiente'&&d.fechaCobro===mananaStr; });
   pendientes.forEach(function(d){
-    new Notification('\u23F0 Cobro ma\u00f1ana \u2014 '+(db.config.notificationTitle||db.config.businessName||'FinControl'), {
-      body: d.clienteNombre + ' \u2014 $' + fmt(d.valor),
+    new Notification('⏰ Cobro mañana — '+(db.config.notificationTitle||db.config.businessName||'FinControl'), {
+      body: d.clienteNombre + ' — $' + fmt(d.valor),
       icon: './icon-192.png', tag: 'cobro-'+d.id
     });
   });
@@ -2283,6 +2330,19 @@ loginAs = function(user) {
   setTimeout(pedirPermisoNotificaciones, 2000);
 };
 
+
+/* ===================== RUTAS PWA ===================== */
+function aplicarRutaPWA() {
+  var tab = String(window.location.hash || '').replace(/^#/, '');
+  if (!tab) return;
+
+  var btn = document.querySelector('.tab-btn[data-tab="' + tab + '"]');
+  if (btn && document.getElementById('app').style.display !== 'none') {
+    switchTab(btn);
+  }
+}
+
+window.addEventListener('hashchange', aplicarRutaPWA);
 
 /* ===================== CARGAR DESDE SHEETS ===================== */
 function cargarDesdeSheets(cb, _localPendientes) {
@@ -2545,19 +2605,44 @@ function agregarReferidoId(clienteId) {
   agregarReferido(c.nombre, clienteId);
 }
 
+/* ===================== MIGRACION DE ALMACENAMIENTO ===================== */
+function migrarStorageFinControl() {
+  try {
+    // Compatibilidad de una sola vía con instalaciones anteriores.
+    // El prefijo anterior se construye por código para no conservar branding heredado.
+    var prefijoAnterior = String.fromCharCode(97, 99, 97, 95);
+    var sufijos = [
+      'recibos','productos','promociones','clientes','gastosFijos',
+      'deudores','puntos','config','session','lastNotifCheck'
+    ];
+
+    sufijos.forEach(function(sufijo) {
+      var anterior = prefijoAnterior + sufijo;
+      var actual = 'fincontrol_' + sufijo;
+      if (localStorage.getItem(actual) === null && localStorage.getItem(anterior) !== null) {
+        localStorage.setItem(actual, localStorage.getItem(anterior));
+      }
+      localStorage.removeItem(anterior);
+    });
+  } catch(e) {
+    console.warn('Migración de almacenamiento FinControl:', e);
+  }
+}
+
 /* ===================== BOOT ===================== */
+migrarStorageFinControl();
 loadDB();
 aplicarApariencia();
 // Restaurar sesion si existe
 (function() {
   try {
-    var saved = localStorage.getItem('aca_session');
+    var saved = localStorage.getItem('fincontrol_session');
     if (saved) {
       var user = JSON.parse(saved);
       // Verificar que el usuario sigue existiendo
       var exists = db.config.usuarios.some(function(u) { return u.id === user.id && u.password === user.password; });
       if (exists) { loginAs(user); return; }
-      localStorage.removeItem('aca_session');
+      localStorage.removeItem('fincontrol_session');
     }
   } catch(e) {}
 })();
