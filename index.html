@@ -11,7 +11,7 @@
   <!-- Open Graph -->  
   <meta property="og:title" content="Roberto Durán | Arquitecto Digital" />  
   <meta property="og:description" content="IA aplicada, automatización, branding estratégico y negocios digitales." />  
-  <meta property="og:image" content="assets/preview.jpg" />  
+  <meta property="og:image" content="assets/roberto-profile.jpg" />  
   <meta property="og:type" content="website" />  
   
   <!-- Fonts -->  
@@ -20,169 +20,10 @@
   <link   
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oxanium:wght@600;700;800&display=swap"   
     rel="stylesheet"  
-  >  
-  
-  <!-- Tailwind CDN -->  
-  <script src="https://cdn.tailwindcss.com"></script>  
-  
-  <script>  
-    tailwind.config = {  
-      theme: {  
-        extend: {  
-          colors: {  
-            rdBlack: "#050505",  
-            rdBlue: "#3177F3",  
-            rdWhite: "#FFFFFF",  
-            rdGray: "#828282",  
-            rdGraphite: "#1C1C1C"  
-          },  
-          fontFamily: {  
-            oxanium: ["Oxanium", "sans-serif"],  
-            inter: ["Inter", "sans-serif"]  
-          },  
-          boxShadow: {  
-            glow: "0 0 40px rgba(49, 119, 243, 0.35)",  
-            softGlow: "0 0 70px rgba(49, 119, 243, 0.18)"  
-          }  
-        }  
-      }  
-    }  
-  </script>  
-  
-  <style>  
-    body {  
-      background:  
-        radial-gradient(circle at top, rgba(49,119,243,0.20), transparent 34%),  
-        radial-gradient(circle at bottom right, rgba(49,119,243,0.08), transparent 30%),  
-        #050505;  
-    }  
-  
-    .glass-card {  
-      background: linear-gradient(  
-        180deg,  
-        rgba(255,255,255,0.075),  
-        rgba(255,255,255,0.025)  
-      );  
-      border: 1px solid rgba(255,255,255,0.10);  
-      backdrop-filter: blur(22px);  
-      -webkit-backdrop-filter: blur(22px);  
-    }  
-  
-    .blue-line {  
-      background: linear-gradient(90deg, transparent, rgba(49,119,243,0.8), transparent);  
-    }  
-  
-    .action-btn {  
-      transition: all 0.25s ease;  
-    }  
-  
-    .action-btn:hover {  
-      transform: translateY(-2px);  
-      box-shadow: 0 0 28px rgba(49,119,243,0.28);  
-      border-color: rgba(49,119,243,0.75);  
-    }  
-  
-    .grid-bg {  
-      background-image:  
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),  
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);  
-      background-size: 42px 42px;  
-      mask-image: linear-gradient(to bottom, black, transparent 82%);  
-      -webkit-mask-image: linear-gradient(to bottom, black, transparent 82%);  
-    }  
-  
-    #saveOverlay {  
-      transition: opacity 0.45s ease, visibility 0.45s ease;  
-    }  
-  
-    #saveOverlay.hidden-overlay {  
-      opacity: 0;  
-      visibility: hidden;  
-    }   
-  
-    @media (max-height: 760px) {  
-      .glass-card {  
-        border-radius: 1.7rem;  
-      }  
-    }  
-  
-    /* Botón flotante WhatsApp */  
-    .whatsapp-floating {  
-      position: fixed;  
-      right: 18px;  
-      bottom: calc(18px + env(safe-area-inset-bottom));  
-      width: 62px;  
-      height: 62px;  
-      border-radius: 999px;  
-      background: #25D366;  
-      display: flex;  
-      align-items: center;  
-      justify-content: center;  
-      z-index: 40;  
-      box-shadow: 0 0 34px rgba(37, 211, 102, 0.42);  
-      transition: transform 0.25s ease, box-shadow 0.25s ease;  
-    }  
-  
-    .whatsapp-floating:hover {  
-      transform: translateY(-3px) scale(1.04);  
-      box-shadow: 0 0 42px rgba(37, 211, 102, 0.62);  
-    }  
-  
-    .whatsapp-floating svg {  
-      width: 32px;  
-      height: 32px;  
-      fill: #ffffff;  
-    }  
-  
-    @media (max-width: 480px) {  
-      .whatsapp-floating {  
-        right: 16px;  
-        bottom: calc(16px + env(safe-area-inset-bottom));  
-        width: 58px;  
-        height: 58px;  
-      }  
-  
-      .whatsapp-floating svg {  
-        width: 30px;  
-        height: 30px;  
-      }  
-    }
+  >
 
-    /* Botón flotante Guardar Contacto */
-    .save-contact-floating {
-      position: fixed;
-      top: calc(18px + env(safe-area-inset-top));
-      right: 18px;
-      z-index: 40;
-      border: 1px solid rgba(49, 119, 243, 0.65);
-      background: rgba(49, 119, 243, 0.16);
-      color: #ffffff;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-radius: 999px;
-      padding: 11px 16px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: Inter, sans-serif;
-      box-shadow: 0 0 26px rgba(49, 119, 243, 0.28);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .save-contact-floating:hover {
-      transform: translateY(-2px);
-      border-color: rgba(49, 119, 243, 1);
-      box-shadow: 0 0 34px rgba(49, 119, 243, 0.42);
-    }
-
-    @media (max-width: 480px) {
-      .save-contact-floating {
-        top: calc(14px + env(safe-area-inset-top));
-        right: 14px;
-        padding: 10px 14px;
-        font-size: 12px;
-      }
-    }
-  </style>  
+  <!-- Estilos locales: sin dependencia de Tailwind CDN -->
+  <link rel="stylesheet" href="styles.css?v=1.0.2" />
 </head>  
   
 <body class="min-h-screen text-rdWhite font-inter overflow-x-hidden">  
