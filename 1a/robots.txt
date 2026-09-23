@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robertoduran.habilitus.com/1a/sitemap.xml
