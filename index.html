@@ -357,6 +357,129 @@ html{scroll-behavior:smooth}.page{--rd-blue:#3177F3;--rd-black:#050505;--rd-grap
   }
 }
 
+
+/* ===== RESPONSIVE MÓVIL LIMPIO · header + hero dentro del viewport ===== */
+@media (max-width:560px){
+  html,body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
+
+  .page{
+    --header-h:68px;
+    width:100%;
+    max-width:100%;
+  }
+
+  .page .header{
+    width:100%;
+    min-height:var(--header-h);
+  }
+
+  .page .header .container{
+    width:100% !important;
+    max-width:100% !important;
+    padding-left:16px !important;
+    padding-right:16px !important;
+  }
+
+  .page .nav{
+    min-height:var(--header-h) !important;
+    width:100%;
+    gap:10px !important;
+  }
+
+  .page .brand{
+    min-width:0;
+    max-width:100%;
+    gap:9px !important;
+  }
+
+  .page .logo{
+    width:38px !important;
+    height:38px !important;
+    flex:0 0 38px !important;
+  }
+
+  .page .brandName{
+    min-width:0;
+    max-width:calc(100vw - 86px) !important;
+    font-size:14px !important;
+    line-height:1.15 !important;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .page .hero{
+    min-height:auto !important;
+    height:auto !important;
+  }
+
+  .page .heroGrid{
+    min-height:auto !important;
+    height:auto !important;
+    padding:26px 0 30px !important;
+    align-items:start !important;
+  }
+
+  .page .heroContent{
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  .page .hero .eyebrow{
+    max-width:100%;
+    padding:7px 10px !important;
+    font-size:11px !important;
+    line-height:1.25 !important;
+    white-space:normal;
+  }
+
+  .page .hero h1{
+    max-width:100% !important;
+    margin-top:70px !important;
+    margin-bottom:16px !important;
+    font-size:clamp(2.2rem,10.4vw,2.85rem) !important;
+    line-height:1.01 !important;
+    letter-spacing:-.035em !important;
+  }
+
+  .page .hero .lead{
+    max-width:100% !important;
+    margin:0 !important;
+    font-size:15.5px !important;
+    line-height:1.5 !important;
+  }
+
+  .page .heroPromise{
+    gap:8px !important;
+    margin-top:18px !important;
+  }
+
+  .page .heroPromise span{
+    min-height:36px !important;
+    padding:7px 11px !important;
+    font-size:12px !important;
+  }
+
+  .page .hero .actions{
+    gap:10px !important;
+    margin-top:22px !important;
+  }
+
+  .page .hero .button{
+    min-height:50px !important;
+    padding:0 16px !important;
+    font-size:14px !important;
+  }
+
+  .page .heroNote{
+    display:none !important;
+  }
+}
+
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EYEZ89TBZT"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-EYEZ89TBZT");function wlpEvent(n,p){try{gtag("event",n,p||{})}catch(e){}}</script>
 <script type="application/ld+json">{
