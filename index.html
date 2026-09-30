@@ -520,6 +520,69 @@ html{scroll-behavior:smooth}.page{--rd-blue:#3177F3;--rd-black:#050505;--rd-grap
   }
 }
 
+
+/* ===== AJUSTE FINO MÓVIL V2 · sangrado + centrado + botones ===== */
+@media (max-width:560px){
+
+  /* Mantiene la imagen del hero exactamente como está.
+     El sangrado se aplica SOLO al contenido. */
+  .page .heroGrid{
+    width:calc(100% - 32px) !important;
+    max-width:calc(100% - 32px) !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  .page .heroContent{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+
+  /* Etiqueta superior centrada dentro del ancho útil. */
+  .page .hero .eyebrow{
+    display:flex !important;
+    width:max-content !important;
+    max-width:100% !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+    justify-content:center !important;
+  }
+
+  /* Fuerza todo el contenido textual a respetar el sangrado. */
+  .page .hero h1,
+  .page .hero .lead,
+  .page .heroPromise,
+  .page .hero .actions,
+  .page .heroNote{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+
+  .page .hero h1,
+  .page .hero .lead,
+  .page .heroNote{
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+  }
+
+  /* Sube ligeramente el bloque de botones sin tocar el resto. */
+  .page .heroPromise{
+    margin-bottom:0 !important;
+  }
+
+  .page .hero .actions{
+    margin-top:12px !important;
+    gap:10px !important;
+  }
+
+  .page .heroGrid{
+    padding-bottom:20px !important;
+  }
+}
+
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EYEZ89TBZT"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-EYEZ89TBZT");function wlpEvent(n,p){try{gtag("event",n,p||{})}catch(e){}}</script>
 <script type="application/ld+json">{
