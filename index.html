@@ -358,52 +358,165 @@ html{scroll-behavior:smooth}.page{--rd-blue:#3177F3;--rd-black:#050505;--rd-grap
 }
 
 
-/* ===== Ajuste responsive: conservar el espacio entre etiqueta y H1 ===== */
-@media (max-width:900px){
-  .page .hero .eyebrow{
-    top:0 !important;
-    margin-bottom:0 !important;
-  }
 
-  .page .hero h1{
-    margin-top:72px !important;
-  }
-}
-
+/* ===== RESPONSIVE MÓVIL FINAL · limpio y estable ===== */
 @media (max-width:560px){
-  .page .hero h1{
-    margin-top:64px !important;
+
+  html,
+  body{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    overflow-x:hidden !important;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
   }
-}
 
-
-/* ===== Ajuste fino de espaciado móvil / tablet ===== */
-@media (max-width:900px){
-  .page .hero h1{
-    margin-top:84px !important;
+  .page{
+    width:100% !important;
+    max-width:100% !important;
+    --header-h:64px;
   }
-}
 
-@media (max-width:560px){
-  .page .hero h1{
-    margin-top:82px !important;
+  /* Evita que Chrome móvil recorte el header con la barra dinámica. */
+  .page .header{
+    position:relative !important;
+    top:auto !important;
+    width:100% !important;
+    max-width:100% !important;
   }
-}
 
+  .page .nav{
+    width:100% !important;
+    min-height:64px !important;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
+  }
 
-/* ===== Ajuste único para celular: reposicionar imagen del hero ===== */
-@media (max-width:560px){
+  .page .brand{
+    min-width:0 !important;
+    max-width:100% !important;
+  }
+
+  .page .logo{
+    width:38px !important;
+    height:38px !important;
+    flex:0 0 38px !important;
+  }
+
+  .page .brandName{
+    min-width:0 !important;
+    max-width:calc(100vw - 84px) !important;
+    font-size:14px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  /* El hero crece por contenido, no por la altura variable del navegador. */
   .page .hero{
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:hidden !important;
+
+    /* Posición aprobada de la imagen en celular. */
     background-size:auto 108% !important;
-    background-position:45% 62% !important;
+    background-position:30% 100% !important;
+    background-repeat:no-repeat !important;
   }
-}
 
+  .page .heroGrid{
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:28px 0 32px !important;
+    display:block !important;
+  }
 
-/* ===== AJUSTE QUIRÚRGICO SOLO CELULAR: mover imagen del hero a la derecha ===== */
-@media (max-width:560px){
-  .page .hero{
-    background-position: 30% 100% !important;
+  .page .heroContent{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none !important;
+    text-align:left !important;
+  }
+
+  .page .hero .eyebrow{
+    position:relative !important;
+    top:auto !important;
+    width:auto !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:7px 11px !important;
+    font-size:11px !important;
+    line-height:1.25 !important;
+    white-space:normal !important;
+  }
+
+  /*
+    Esta separación crea una franja visual exclusiva para:
+    GOOGLE · MAPS · WEB · WHATSAPP
+    entre la etiqueta superior y el H1.
+  */
+  .page .hero h1{
+    width:100% !important;
+    max-width:100% !important;
+    margin:116px 0 18px !important;
+    font-size:clamp(2.12rem,10.4vw,2.85rem) !important;
+    line-height:1.02 !important;
+    letter-spacing:-.035em !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+  }
+
+  .page .hero .lead{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    font-size:15.5px !important;
+    line-height:1.52 !important;
+    overflow-wrap:break-word !important;
+  }
+
+  .page .heroPromise{
+    width:100% !important;
+    gap:8px !important;
+    margin-top:18px !important;
+  }
+
+  .page .heroPromise span{
+    min-height:36px !important;
+    max-width:100% !important;
+    padding:7px 10px !important;
+    font-size:12px !important;
+  }
+
+  .page .hero .actions{
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+    margin-top:22px !important;
+  }
+
+  .page .hero .button{
+    width:100% !important;
+    max-width:100% !important;
+    min-height:50px !important;
+    padding:0 16px !important;
+    font-size:14px !important;
+  }
+
+  .page .heroNote{
+    width:100% !important;
+    max-width:100% !important;
+    margin:14px 0 0 !important;
+    font-size:12px !important;
+    line-height:1.45 !important;
   }
 }
 
